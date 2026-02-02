@@ -113,6 +113,21 @@
             transform: scale(1.05);
         }
         
+        /* Hidden class for toggling views */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Thank you section styles */
+        .thank-you-section {
+            animation: fadeIn 2s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .buttons {
             display: flex;
             justify-content: center;
@@ -308,22 +323,59 @@
                 width: 95%;
             }
         }
+        
+        .music-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid #ff4d6d;
+            color: #ff4d6d;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            min-width: auto;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        .music-btn:hover {
+            transform: scale(1.1);
+            background: white;
+        }
     </style>
 </head>
 <body>
+    <button id="musicBtn" class="music-btn">
+        <i class="fas fa-music"></i>
+    </button>
+    
+    <audio id="bgMusic" loop>
+        <!-- Romantic background music -->
+        <source src="https://cdn.pixabay.com/download/audio/2022/02/07/audio_1822030a61.mp3?filename=piano-moment-11176.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
     <div class="container">
-        <h1>Will You Be My Valentine? 💌</h1>
+        <h1 id="mainTitle">Will You Be My Valentine? 💌</h1>
         
         <div class="heart">❤️</div>
         
-        <div class="message">
+        <div class="message" id="mainMessage">
             My dearest love, every day with you feels like a beautiful dream. 
             As Valentine's Day approaches, I can't help but think how incredibly 
             lucky I am to have you in my life. You light up my world in ways 
             I never imagined possible.
         </div>
         
-        <div class="input-section">
+        <div class="input-section" id="inputSection">
             <label for="name"><i class="fas fa-heart"></i> Your Beautiful Name:</label>
             <input type="text" id="name" placeholder="Enter your name here">
             
@@ -331,11 +383,11 @@
             <input type="text" id="message" placeholder="Any message for me?">
         </div>
         
-        <div class="message">
+        <div class="message" id="questionMessage">
             So here I am, with my heart in my hands, asking you the most important question...
         </div>
         
-        <div class="buttons">
+        <div class="buttons" id="actionButtons">
             <button class="yes-btn" id="yesBtn">
                 <i class="fas fa-heart"></i> YES! Absolutely ❤️
             </button>
@@ -350,17 +402,39 @@
         </div>
         
         <div class="result" id="result"></div>
+
+        <!-- Hidden Thank You Section -->
+        <div class="thank-you-section hidden" id="thankYouSection">
+            <div style="font-size: 2.5rem; margin-bottom: 20px;">🎉💖🎊</div>
+            <div class="message" style="font-size: 1.4rem; color: #d63384;">
+                Thank you for making me the happiest person in the world!
+                <br><br>
+                I promise to cherish you, love you, and make every moment count. 
+                You are my everything, and I can't wait to celebrate with you.
+            </div>
+            
+            <div style="margin-top: 30px; padding: 20px; background: rgba(255,255,255,0.8); border-radius: 15px;">
+                <h3 style="color: #ff4d6d; margin-bottom: 15px;">Send me a message ❤️</h3>
+                <textarea id="finalMessage" placeholder="Write something sweet to me..." style="width: 100%; padding: 15px; border: 2px solid #ffafcc; border-radius: 15px; min-height: 100px; font-family: 'Poppins', sans-serif; margin-bottom: 10px;"></textarea>
+                <button onclick="sendFinalMessage()" style="width: 100%; background: #ff4d6d; color: white;">
+                    <i class="fas fa-paper-plane"></i> Send Message
+                </button>
+            </div>
+        </div>
         
         <div class="floating-hearts" id="heartsContainer"></div>
         
         <footer>
             Made with <span style="color:#ff4d6d">❤️</span> for the most amazing person in my life
-            <br><small>Your response will be saved and visible in my admin dashboard</small>
         </footer>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Check for name in URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const nameParam = urlParams.get('name');
+            
             const nameInput = document.getElementById('name');
             const messageInput = document.getElementById('message');
             const yesBtn = document.getElementById('yesBtn');
@@ -369,9 +443,55 @@
             const heartsContainer = document.getElementById('heartsContainer');
             const chatNotification = document.getElementById('chatNotification');
             const viewChatLink = document.getElementById('viewChatLink');
+            const musicBtn = document.getElementById('musicBtn');
+            const bgMusic = document.getElementById('bgMusic');
+            
+            // Personalize if name exists
+            if (nameParam) {
+                const cleanName = nameParam.replace(/[<>]/g, ''); // Basic sanitization
+                nameInput.value = cleanName;
+                document.getElementById('mainTitle').innerHTML = `Will You Be My Valentine, ${cleanName}? 💌`;
+                document.getElementById('inputSection').style.display = 'none'; // Hide input since we have the name
+                
+                // Update message to be more personal
+                document.getElementById('mainMessage').innerHTML = `
+                    ${cleanName}, my dearest love, every day with you feels like a beautiful dream. 
+                    As Valentine's Day approaches, I can't help but think how incredibly 
+                    lucky I am to have you in my life.
+                `;
+            }
             
             let clickCount = 0;
             let userResponse = null;
+            
+            // Music Control
+            let isMusicPlaying = false;
+            
+            function toggleMusic() {
+                if (isMusicPlaying) {
+                    bgMusic.pause();
+                    musicBtn.innerHTML = '<i class="fas fa-music"></i>';
+                } else {
+                    bgMusic.play().then(() => {
+                        musicBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                    }).catch(e => console.log("Audio play failed", e));
+                }
+                isMusicPlaying = !isMusicPlaying;
+            }
+            
+            musicBtn.addEventListener('click', toggleMusic);
+            
+            // Try to autoplay on first interaction (click anywhere)
+            document.body.addEventListener('click', function() {
+                if (!isMusicPlaying) {
+                    bgMusic.play().then(() => {
+                        isMusicPlaying = true;
+                        musicBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                    }).catch(e => {
+                        console.log("Autoplay prevented by browser policy", e);
+                    });
+                }
+            }, { once: true });
             
             // Create floating hearts
             function createFloatingHearts() {
@@ -398,27 +518,21 @@
                 // Send response to server
                 await submitResponse('YES', name, message);
                 
-                result.innerHTML = `
-                    <div style="font-size: 2.5rem; margin-bottom: 10px;">🎉💖🎊</div>
-                    ${name}, you've made me the happiest person in the world! 💖<br>
-                    ${message ? `Your message: "${message}"` : ''}
-                    <div style="margin-top: 15px; font-size: 1.5rem;">
-                        I can't wait to celebrate Valentine's Day with you! 
-                    </div>
-                    <div style="margin-top: 20px; color: #666; font-size: 1.2rem;">
-                        <i class="fas fa-check-circle"></i> Your response has been saved
-                    </div>
-                `;
-                result.classList.add('show');
+                // HIDE the proposal elements
+                document.getElementById('mainTitle').innerText = `I Love You, ${name}! 💖`;
+                document.getElementById('mainMessage').classList.add('hidden');
+                document.getElementById('inputSection').classList.add('hidden');
+                document.getElementById('questionMessage').classList.add('hidden');
+                document.getElementById('actionButtons').classList.add('hidden');
+                
+                // SHOW the romantic thank you page
+                document.getElementById('thankYouSection').classList.remove('hidden');
                 
                 // Create explosion of hearts
                 createHeartExplosion();
                 
-                // Update button and hide no button
-                yesBtn.innerHTML = '<i class="fas fa-heart"></i> I SAID YES! 💕';
-                yesBtn.disabled = true;
-                yesBtn.style.background = 'linear-gradient(to right, #28a745, #20c997)';
-                noBtn.style.display = 'none';
+                // Start continuous heart rain
+                setInterval(createFloatingHearts, 2000);
                 
                 // Check for admin messages
                 checkForMessages();
@@ -543,6 +657,25 @@
                 } catch (error) {
                     console.error('Error checking messages:', error);
                 }
+            }
+            
+            // Global function for the final message box
+            window.sendFinalMessage = async function() {
+                const msg = document.getElementById('finalMessage').value;
+                if(!msg.trim()) return;
+                
+                await fetch('/api/send-message', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        sender: 'user',
+                        receiver: 'admin',
+                        message: msg,
+                        timestamp: new Date().toISOString()
+                    })
+                });
+                alert('Message sent to your Valentine! ❤️');
+                document.getElementById('finalMessage').value = '';
             }
             
             // Function to show chat modal
