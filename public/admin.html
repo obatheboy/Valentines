@@ -515,94 +515,105 @@
         document.getElementById('totalMessages').textContent = allMessages.length;
     }
     
-    function displayResponses() {
-        const responsesList = document.getElementById('responsesList');
-        const noResponses = document.getElementById('noResponses');
-        
-        if (allResponses.length === 0) {
-            noResponses.style.display = 'block';
-            responsesList.innerHTML = '';
-            console.log('📭 No responses to display');
-        } else {
-            noResponses.style.display = 'none';
-            
-            // Sort by newest first
-            const sortedResponses = [...allResponses].sort((a, b) => 
-                new Date(b.timestamp) - new Date(a.timestamp)
-            );
-            
-            let html = '';
-            sortedResponses.slice(0, 10).forEach(response => {
-                const answerClass = response.answer === 'YES' ? 'answer-yes' : 'answer-maybe';
-                
-                html += `
-                    <div class="response-item">
-                        <div class="response-header">
-                            <div class="response-name">
-                                <i class="fas fa-user"></i> ${response.name || 'Anonymous'}
-                            </div>
-                            <span class="response-answer ${answerClass}">
-                                ${response.answer || 'NO ANSWER'}
-                            </span>
-                        </div>
-                        <div class="response-time">
-                            <i class="far fa-clock"></i> ${new Date(response.timestamp).toLocaleString()}
-                        </div>
-                    </div>
-                `;
-            });
-            
-            responsesList.innerHTML = html;
-            console.log('📊 Displayed', Math.min(sortedResponses.length, 10), 'responses');
-        }
+ function displayResponses() {
+    const responsesList = document.getElementById('responsesList');
+    const noResponses = document.getElementById('noResponses');
+    
+    // Check if elements exist
+    if (!responsesList || !noResponses) {
+        console.error('❌ DOM elements not found for responses display');
+        return;
     }
     
-    function displayMessages() {
-        const messagesList = document.getElementById('messagesList');
-        const noMessages = document.getElementById('noMessages');
+    if (allResponses.length === 0) {
+        noResponses.style.display = 'block';
+        responsesList.innerHTML = '';
+        console.log('📭 No responses to display');
+    } else {
+        noResponses.style.display = 'none';
         
-        if (allMessages.length === 0) {
-            noMessages.style.display = 'block';
-            messagesList.innerHTML = '';
-            console.log('📭 No messages to display');
-        } else {
-            noMessages.style.display = 'none';
+        // Sort by newest first
+        const sortedResponses = [...allResponses].sort((a, b) => 
+            new Date(b.timestamp) - new Date(a.timestamp)
+        );
+        
+        let html = '';
+        sortedResponses.slice(0, 10).forEach(response => {
+            const answerClass = response.answer === 'YES' ? 'answer-yes' : 'answer-maybe';
             
-            // Sort by newest first
-            const sortedMessages = [...allMessages].sort((a, b) => 
-                new Date(b.timestamp) - new Date(a.timestamp)
-            );
-            
-            let html = '';
-            sortedMessages.slice(0, 10).forEach(message => {
-                html += `
-                    <div class="message-item" data-id="${message.id}">
-                        <div class="message-header">
-                            <div class="message-name">
-                                <i class="fas fa-user"></i> ${message.name || 'Someone'}
-                            </div>
+            html += `
+                <div class="response-item">
+                    <div class="response-header">
+                        <div class="response-name">
+                            <i class="fas fa-user"></i> ${response.name || 'Anonymous'}
                         </div>
-                        <div class="message-content">${message.message || 'No message content'}</div>
-                        <div class="message-time">
-                            <i class="far fa-clock"></i> ${new Date(message.timestamp).toLocaleString()}
-                        </div>
-                        <div class="reply-section">
-                            <div class="reply-input">
-                                <input type="text" id="reply-${message.id}" placeholder="Reply to ${message.name}...">
-                                <button onclick="sendReply('${message.id}', '${message.name}')">
-                                    <i class="fas fa-paper-plane"></i> Reply
-                                </button>
-                            </div>
-                        </div>
+                        <span class="response-answer ${answerClass}">
+                            ${response.answer || 'NO ANSWER'}
+                        </span>
                     </div>
-                `;
-            });
-            
-            messagesList.innerHTML = html;
-            console.log('💌 Displayed', Math.min(sortedMessages.length, 10), 'messages');
-        }
+                    <div class="response-time">
+                        <i class="far fa-clock"></i> ${new Date(response.timestamp).toLocaleString()}
+                    </div>
+                </div>
+            `;
+        });
+        
+        responsesList.innerHTML = html;
+        console.log('📊 Displayed', Math.min(sortedResponses.length, 10), 'responses');
+    }
+}
+    
+  function displayMessages() {
+    const messagesList = document.getElementById('messagesList');
+    const noMessages = document.getElementById('noMessages');
+    
+    // Check if elements exist
+    if (!messagesList || !noMessages) {
+        console.error('❌ DOM elements not found for messages display');
+        return;
     }
     
+    if (allMessages.length === 0) {
+        noMessages.style.display = 'block';
+        messagesList.innerHTML = '';
+        console.log('📭 No messages to display');
+    } else {
+        noMessages.style.display = 'none';
+        
+        // Sort by newest first
+        const sortedMessages = [...allMessages].sort((a, b) => 
+            new Date(b.timestamp) - new Date(a.timestamp)
+        );
+        
+        let html = '';
+        sortedMessages.slice(0, 10).forEach(message => {
+            html += `
+                <div class="message-item" data-id="${message.id}">
+                    <div class="message-header">
+                        <div class="message-name">
+                            <i class="fas fa-user"></i> ${message.name || 'Someone'}
+                        </div>
+                    </div>
+                    <div class="message-content">${message.message || 'No message content'}</div>
+                    <div class="message-time">
+                        <i class="far fa-clock"></i> ${new Date(message.timestamp).toLocaleString()}
+                    </div>
+                    <div class="reply-section">
+                        <div class="reply-input">
+                            <input type="text" id="reply-${message.id}" placeholder="Reply to ${message.name}...">
+                            <button onclick="sendReply('${message.id}', '${message.name}')">
+                                <i class="fas fa-paper-plane"></i> Reply
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        messagesList.innerHTML = html;
+        console.log('💌 Displayed', Math.min(sortedMessages.length, 10), 'messages');
+    }
+}
     async function sendReply(messageId, userName) {
         const input = document.getElementById(`reply-${messageId}`);
         const reply = input.value.trim();
