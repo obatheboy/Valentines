@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For Someone Special 💝</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
         
         body {
@@ -34,6 +37,7 @@
             overflow: hidden;
             backdrop-filter: blur(10px);
             border: 2px solid rgba(255, 255, 255, 0.3);
+            animation: fadeIn 1.5s ease-out;
         }
         
         .heart {
@@ -45,9 +49,10 @@
         }
         
         h1 {
+            font-family: 'Dancing Script', cursive;
             color: #d63384;
             margin-bottom: 25px;
-            font-size: 3.5rem;
+            font-size: 4rem;
             background: linear-gradient(to right, #ff4d6d, #ff8fa3);
             -webkit-background-clip: text;
 
@@ -95,6 +100,7 @@ color: transparent; /* Fallback for browsers that don't support background-clip 
             outline: none;
             transition: all 0.3s;
             background: white;
+            font-family: 'Poppins', sans-serif;
         }
         
         .input-container input:focus {
@@ -146,10 +152,11 @@ color: transparent; /* Fallback for browsers that don't support background-clip 
         
         footer {
             margin-top: 50px;
-            color: #888;
+            color: #fff;
             font-size: 1rem;
             padding-top: 25px;
-            border-top: 1px solid #eee;
+            border-top: 1px solid rgba(255,255,255,0.3);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
         }
         
         .creator-credit {
@@ -163,6 +170,11 @@ color: transparent; /* Fallback for browsers that don't support background-clip 
             font-weight: bold;
         }
         
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         @keyframes heartbeat {
             0% { transform: scale(1); }
             50% { transform: scale(1.2); }
@@ -217,13 +229,13 @@ color: transparent; /* Fallback for browsers that don't support background-clip 
         
         @media (max-width: 480px) {
             .container { padding: 30px 20px; width: 95%; }
-            h1 { font-size: 2rem; }
+            h1 { font-size: 2.8rem; }
             .heart { font-size: 3.5rem; margin: 10px 0; }
-            .subtitle { font-size: 1.1rem; margin-bottom: 30px; }
+            .subtitle { font-size: 1rem; margin-bottom: 30px; }
             .input-container { padding: 20px 15px; margin: 25px 0; }
-            .input-container label { font-size: 1.1rem; }
-            .input-container input { width: 100%; padding: 12px 20px; font-size: 1.1rem; }
-            .continue-btn { padding: 15px 30px; font-size: 1.2rem; width: 100%; justify-content: center; }
+            .input-container label { font-size: 1rem; }
+            .input-container input { width: 100%; padding: 12px 20px; font-size: 1rem; }
+            .continue-btn { padding: 15px 20px; font-size: 1.1rem; width: 100%; justify-content: center; }
             footer { margin-top: 30px; }
         }
     </style>

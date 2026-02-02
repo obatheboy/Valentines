@@ -13,8 +13,7 @@
         }
         
         body {
-            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
-            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e, #
             display: flex;
             justify-content: center;
             align-items: center;
@@ -31,6 +30,7 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: zoomIn 0.8s ease-out;
         }
         
         .logo {
@@ -122,12 +122,13 @@
             text-align: left;
         }
         
+        /* Zyron Credit */
         .creator-credit {
-            margin-top: 25px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #666;
-            font-size: 0.85rem;
+            position: fixed;
+           xo ize: 0.8rem;
+            z-index: 1000;
+            pointer-events: none;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
         }
         
         .creator-credit span {
@@ -139,6 +140,11 @@
             0% { transform: scale(1); }
             50% { transform: scale(1.1); }
             100% { transform: scale(1); }
+        }
+        
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
         }
         
         @media (max-width: 768px) {
@@ -197,14 +203,12 @@
             <br><small>(Change these in the code before deploying)</small>
         </div>
         
-        <div class="creator-credit">
-            Created with 💖 by <span>Zyron</span>
-        </div>
     </div>
-
-    <script>
-        // Default credentials (change these!)
-        const ADMIN_USERNAME = 'admin';
+    
+    <div class="creator-credit">
+        Created with 💖 by <span>Zyron</span>
+    </div>pt>
+   // DcADMIN_USERNAME = 'admin';
         const ADMIN_PASSWORD = 'valentine2024';
         
         function login() {

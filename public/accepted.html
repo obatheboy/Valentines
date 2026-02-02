@@ -11,12 +11,15 @@
 </audio>
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Georgia', serif;
+            font-family: 'Poppins', sans-serif;
         }
         
         body {
@@ -40,6 +43,7 @@
             position: relative;
             overflow: hidden;
             border: 3px solid #ff4d6d;
+            animation: zoomIn 0.8s ease-out;
         }
         
         .celebration {
@@ -49,15 +53,17 @@
         }
         
         .greeting {
+            font-family: 'Dancing Script', cursive;
             color: #ff4d6d;
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin-bottom: 20px;
             font-weight: bold;
         }
         
         .name-highlight {
+            font-family: 'Dancing Script', cursive;
             color: #d63384;
-            font-size: 3.5rem;
+            font-size: 4rem;
             background: linear-gradient(to right, #ff4d6d, #ff8fa3);
             -webkit-background-clip: text;
 
@@ -93,7 +99,7 @@ color: transparent; /* Fallback for browsers that don't support background-clip 
         }
         
         .romantic-message {
-            font-size: 1.8rem;
+            font-size: 1.2rem;
             color: #444;
             line-height: 1.9;
             font-style: italic;
@@ -110,7 +116,7 @@ color: transparent; /* Fallback for browsers that don't support background-clip 
         }
         
         .message-form h3 {
-            color: #d63384;
+            color: #ff4d6d;
             font-size: 1.8rem;
             margin-bottom: 25px;
         }
@@ -121,7 +127,7 @@ color: transparent; /* Fallback for browsers that don't support background-clip 
             padding: 20px;
             border: 2px solid #ffafcc;
             border-radius: 20px;
-            font-size: 1.2rem;
+            font-size: 1rem;
             resize: vertical;
             outline: none;
             transition: all 0.3s;
@@ -190,7 +196,7 @@ color: transparent; /* Fallback for browsers that don't support background-clip 
         /* Music Control Styles */
         .music-control {
             position: fixed;
-            bottom: 20px;
+            bottom: 60px;
             right: 20px;
             z-index: 1000;
             background: rgba(255, 255, 255, 0.9);
@@ -220,16 +226,16 @@ color: transparent; /* Fallback for browsers that don't support background-clip 
         /* Zyron Credit */
         .creator-credit {
             position: fixed;
-            bottom: 20px;
-            left: 20px;
+            bottom: 10px;
+            left: 0;
+            width: 100%;
+            text-align: center;
             color: rgba(255, 255, 255, 0.7);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             z-index: 1000;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 8px 15px;
-            border-radius: 20px;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 5px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+            pointer-events: none;
         }
         
         .creator-credit span {
@@ -248,6 +254,11 @@ color: transparent; /* Fallback for browsers that don't support background-clip 
             margin-top: 20px;
         }
         
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-20px); }
@@ -269,15 +280,15 @@ color: transparent; /* Fallback for browsers that don't support background-clip 
             }
             
             .greeting {
-                font-size: 2rem;
-            }
-            
-            .name-highlight {
                 font-size: 2.5rem;
             }
             
+            .name-highlight {
+                font-size: 3rem;
+            }
+            
             .romantic-message {
-                font-size: 1.4rem;
+                font-size: 1.1rem;
                 line-height: 1.7;
             }
             
@@ -295,44 +306,25 @@ color: transparent; /* Fallback for browsers that don't support background-clip 
             }
             
             .music-control {
-                width: 50px;
-                height: 50px;
-                bottom: 15px;
+                width: 45px;
+                height: 45px;
+                bottom: 40px;
                 right: 15px;
-            }
-            
-            .creator-credit {
-                bottom: 15px;
-                left: 15px;
-                font-size: 0.8rem;
-                padding: 6px 12px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .music-control {
-                bottom: 70px;
-            }
-            
-            .creator-credit {
-                bottom: 70px;
-                left: 50%;
-                transform: translateX(-50%);
-                white-space: nowrap;
             }
         }
         
         @media (max-width: 480px) {
             .container { padding: 30px 20px; width: 95%; }
             .celebration { font-size: 2.5rem; }
-            .greeting { font-size: 1.5rem; }
-            .name-highlight { font-size: 2rem; }
+            .greeting { font-size: 2rem; }
+            .name-highlight { font-size: 2.5rem; }
             .message-container { padding: 30px 20px; margin: 20px 0; }
             .message-container::before { font-size: 5rem; top: 10px; left: 10px; }
-            .romantic-message { font-size: 1.1rem; }
+            .romantic-message { font-size: 1rem; }
             .message-form { padding: 20px; margin: 30px 0; }
             .message-form h3 { font-size: 1.3rem; }
-            .send-btn { width: 100%; padding: 15px; font-size: 1.2rem; justify-content: center; }
+            .send-btn { width: 100%; padding: 15px; font-size: 1.1rem; justify-content: center; }
+            .music-control { bottom: 40px; right: 10px; }
         }
     </style>
 </head>
@@ -344,15 +336,32 @@ color: transparent; /* Fallback for browsers that don't support background-clip 
         <div class="name-highlight" id="userName">[Name]</div>
         
         <div class="message-container">
-            <div class="romantic-message" id="romanticMessage">
-                You have no idea how happy you've made me. From the moment you said yes, 
-                my world has been filled with colors I never knew existed. 
-                Your acceptance means everything to me - it's not just about Valentine's Day, 
-                but about having you in my life. I promise to cherish every moment with you, 
-                to make you smile every day, and to be the person you deserve. 
-                Thank you for choosing me. Thank you for being you. 
-                I can't wait to create beautiful memories together. 💖
-            </div>
+          <div class="romantic-message" id="romanticMessage">
+    My dearest Blaise,
+    
+    <br><br>
+    You have no idea how much joy you've brought into my life. Before you, I never knew a heart could feel this full, 
+    this alive. Every time I think of you, my world lights up in ways I never imagined possible.
+    
+    <br><br>
+    Your "yes" means more to me than I could ever put into words. It's not just about celebrating Valentine's Day on 
+    February 14th - it's about celebrating you, us, and this beautiful connection we share. It's about having the 
+    privilege to call you mine, even if just for this special day.
+    
+    <br><br>
+    I promise to cherish every smile you share with me, every laugh that fills the space between us, and every moment 
+    we're together. I promise to be someone worthy of your beautiful heart, to appreciate you exactly as you are, 
+    and to make you feel as special as you make me feel.
+    
+    <br><br>
+    Thank you for being exactly who you are - the incredible, amazing Blaise who has captured my heart in ways 
+    I didn't know were possible. I cannot wait to see what beautiful moments February 14th holds for us, and I'm 
+    even more excited for all the moments that will follow.
+    
+    <br><br>
+    With all my heart,<br>
+    💖
+</div>
         </div>
         
         <div class="message-form">
