@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login - Valentine Messages</title>
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💖</text></svg>">
     <style>
         * {
             margin: 0;
@@ -13,7 +15,8 @@
         }
         
         body {
-            background: linear-gradient(135deg, #1a1a2e, #
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -125,7 +128,10 @@
         /* Zyron Credit */
         .creator-credit {
             position: fixed;
-           xo ize: 0.8rem;
+            bottom: 20px;
+            left: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.8rem;
             z-index: 1000;
             pointer-events: none;
             text-shadow: 0 1px 2px rgba(0,0,0,0.5);
@@ -147,6 +153,12 @@
             to { opacity: 1; transform: scale(1); }
         }
         
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
         @media (max-width: 768px) {
             .login-container {
                 padding: 40px 30px;
@@ -162,13 +174,28 @@
             
             .creator-credit {
                 font-size: 0.8rem;
+                bottom: 15px;
+                left: 15px;
             }
         }
         
         @media (max-width: 480px) {
-            .login-container { padding: 40px 25px; width: 95%; }
-            .logo { font-size: 3rem; }
-            h1 { font-size: 1.8rem; }
+            .login-container { 
+                padding: 40px 25px; 
+                width: 95%; 
+            }
+            .logo { 
+                font-size: 3rem; 
+            }
+            h1 { 
+                font-size: 1.8rem; 
+            }
+            .creator-credit {
+                left: 50%;
+                transform: translateX(-50%);
+                white-space: nowrap;
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -202,13 +229,15 @@
             <br><br>Default credentials: admin / valentine2024
             <br><small>(Change these in the code before deploying)</small>
         </div>
-        
     </div>
     
     <div class="creator-credit">
         Created with 💖 by <span>Zyron</span>
-    </div>pt>
-   // DcADMIN_USERNAME = 'admin';
+    </div>
+
+    <script>
+        // Default credentials
+        const ADMIN_USERNAME = 'admin';
         const ADMIN_PASSWORD = 'valentine2024';
         
         function login() {
@@ -222,7 +251,7 @@
                 localStorage.setItem('adminToken', Date.now().toString());
                 
                 // Redirect to admin dashboard
-                window.location.href = '/admin.html';
+                window.location.href = '/admin';
             } else {
                 error.style.display = 'block';
                 document.getElementById('password').value = '';
@@ -235,17 +264,6 @@
                 }, 500);
             }
         }
-        
-        // Add shake animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes shake {
-                0%, 100% { transform: translateX(0); }
-                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-                20%, 40%, 60%, 80% { transform: translateX(5px); }
-            }
-        `;
-        document.head.appendChild(style);
         
         // Allow Enter key to submit
         document.getElementById('password').addEventListener('keypress', function(e) {
@@ -266,7 +284,7 @@
         
         // Check if already logged in
         if (localStorage.getItem('valentineAdmin') === 'true') {
-            window.location.href = '/admin.html';
+            window.location.href = '/admin';
         }
     </script>
 </body>

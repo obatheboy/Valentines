@@ -389,141 +389,187 @@ color: transparent; /* Fallback for browsers that don't support background-clip 
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Get name from URL or session storage
-            const urlParams = new URLSearchParams(window.location.search);
-            let name = urlParams.get('name');
-            
-            if (!name) {
-                name = sessionStorage.getItem('valentineName') || 'Beautiful';
-            }
-            
-            // Display the name
-            document.getElementById('userName').textContent = name;
-            
-            // Create confetti
-            function createConfetti() {
-                const container = document.getElementById('confettiContainer');
-                for (let i = 0; i < 100; i++) {
-                    const piece = document.createElement('div');
-                    piece.classList.add('confetti-piece');
-                    piece.style.left = Math.random() * 100 + '%';
-                    piece.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                    piece.style.animationDelay = Math.random() * 2 + 's';
-                    piece.style.opacity = Math.random() * 0.7 + 0.3;
-                    container.appendChild(piece);
-                }
-            }
-            
-            createConfetti();
-            
-            // Setup music
-            setupMusic();
-        });
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get name from URL or session storage
+        const urlParams = new URLSearchParams(window.location.search);
+        let name = urlParams.get('name');
         
-        // Music functionality
-        function setupMusic() {
-            const audio = document.getElementById('valentineMusic');
-            const musicIcon = document.getElementById('musicIcon');
-            
-            // Set volume and loop
-            audio.volume = 0.7;
-            audio.loop = true;
-            
-            // Try to play music automatically (may require user interaction)
-            const playPromise = audio.play();
-            
-            if (playPromise !== undefined) {
-                playPromise.catch(error => {
-                    console.log("Autoplay prevented, waiting for user interaction");
-                    musicIcon.className = 'fas fa-play';
-                });
-            }
+        if (!name) {
+            name = sessionStorage.getItem('valentineName') || 'Beautiful';
         }
         
-        function toggleMusic() {
-            const audio = document.getElementById('valentineMusic');
-            const musicIcon = document.getElementById('musicIcon');
-            
-            if (audio.paused) {
-                audio.play();
-                musicIcon.className = 'fas fa-pause';
-            } else {
-                audio.pause();
-                musicIcon.className = 'fas fa-play';
-            }
-        }
+        // Display the name
+        document.getElementById('userName').textContent = name;
         
-        async function sendMessage() {
-            const name = sessionStorage.getItem('valentineName') || 'Beautiful';
-            const message = document.getElementById('userMessage').value.trim();
-            
-            if (!message) {
-                alert("Please write a message before sending.");
-                return;
-            }
-            
-            try {
-                // Send message to server
-                const response = await fetch('/api/send-message', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        name,
-                        message,
-                        timestamp: new Date().toISOString()
-                    })
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    // Show success message
-                    document.getElementById('successMessage').style.display = 'block';
-                    document.getElementById('userMessage').value = '';
-                    
-                    // Scroll to success message
-                    document.getElementById('successMessage').scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                    
-                    // Create more confetti for celebration
-                    createMoreConfetti();
-                }
-            } catch (error) {
-                console.error('Error sending message:', error);
-                alert("There was an error sending your message. Please try again.");
-            }
-        }
-        
-        function createMoreConfetti() {
+        // Create confetti
+        function createConfetti() {
             const container = document.getElementById('confettiContainer');
-            for (let i = 0; i < 50; i++) {
+            for (let i = 0; i < 100; i++) {
                 const piece = document.createElement('div');
                 piece.classList.add('confetti-piece');
                 piece.style.left = Math.random() * 100 + '%';
-                piece.style.animationDuration = (Math.random() * 2 + 1) + 's';
-                piece.style.animationDelay = '0s';
+                piece.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                piece.style.animationDelay = Math.random() * 2 + 's';
                 piece.style.opacity = Math.random() * 0.7 + 0.3;
                 container.appendChild(piece);
-                
-                // Remove after animation
-                setTimeout(() => {
-                    piece.remove();
-                }, 3000);
             }
         }
         
-        // Keyboard shortcuts
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'm' || e.key === 'M') {
-                toggleMusic();
-            } else if (e.key === 'Enter' && e.ctrlKey) {
-                sendMessage();
+        createConfetti();
+        
+        // Setup music
+        setupMusic();
+    });
+    
+    // Music functionality
+    function setupMusic() {
+        const audio = document.getElementById('valentineMusic');
+        const musicIcon = document.getElementById('musicIcon');
+        
+        // Set volume and loop
+        audio.volume = 0.7;
+        audio.loop = true;
+        
+        // Try to play music automatically (may require user interaction)
+        const playPromise = audio.play();
+        
+        if (playPromise !== undefined) {
+            playPromise.catch(error => {
+                console.log("Autoplay prevented, waiting for user interaction");
+                musicIcon.className = 'fas fa-play';
+            });
+        }
+    }
+    
+    function toggleMusic() {
+        const audio = document.getElementById('valentineMusic');
+        const musicIcon = document.getElementById('musicIcon');
+        
+        if (audio.paused) {
+            audio.play();
+            musicIcon.className = 'fas fa-pause';
+        } else {
+            audio.pause();
+            musicIcon.className = 'fas fa-play';
+        }
+    }
+    
+    async function sendMessage() {
+        const name = sessionStorage.getItem('valentineName') || 'Beautiful';
+        const messageInput = document.getElementById('userMessage');
+        const message = messageInput.value.trim();
+        
+        if (!message) {
+            alert("Please write a message before sending.");
+            messageInput.focus();
+            return;
+        }
+        
+        // Show loading state
+        const sendBtn = document.querySelector('.send-btn');
+        const originalText = sendBtn.innerHTML;
+        sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+        sendBtn.disabled = true;
+        
+        try {
+            console.log('📤 Sending message to API...');
+            
+            // Send message to server
+            const response = await fetch('/api/send-message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: name,
+                    message: message,
+                    timestamp: new Date().toISOString()
+                })
+            });
+            
+            console.log('📨 API Response status:', response.status);
+            
+            const result = await response.json();
+            console.log('📨 API Response data:', result);
+            
+            if (response.ok && result.success) {
+                // Show success message
+                const successMessage = document.getElementById('successMessage');
+                successMessage.style.display = 'block';
+                successMessage.innerHTML = `✅ Message sent successfully! I'll reply to you soon. 💖<br><small>Message ID: ${result.id || 'N/A'}</small>`;
+                
+                // Clear input
+                messageInput.value = '';
+                
+                // Scroll to success message
+                successMessage.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+                
+                // Create more confetti for celebration
+                createMoreConfetti();
+                
+                // Log to console for debugging
+                console.log('✅ Message sent successfully! ID:', result.id);
+                
+            } else {
+                // Handle API error
+                const errorMsg = result.error || 'Failed to send message';
+                throw new Error(errorMsg);
             }
-        });
-    </script>
+            
+        } catch (error) {
+            console.error('❌ Error sending message:', error);
+            
+            // Show detailed error
+            alert(`Failed to send message: ${error.message}\n\nPlease try again or check console for details.`);
+            
+        } finally {
+            // Reset button state
+            sendBtn.innerHTML = originalText;
+            sendBtn.disabled = false;
+        }
+    }
+    
+    function createMoreConfetti() {
+        const container = document.getElementById('confettiContainer');
+        for (let i = 0; i < 50; i++) {
+            const piece = document.createElement('div');
+            piece.classList.add('confetti-piece');
+            piece.style.left = Math.random() * 100 + '%';
+            piece.style.animationDuration = (Math.random() * 2 + 1) + 's';
+            piece.style.animationDelay = '0s';
+            piece.style.opacity = Math.random() * 0.7 + 0.3;
+            container.appendChild(piece);
+            
+            // Remove after animation
+            setTimeout(() => {
+                if (piece.parentNode === container) {
+                    piece.remove();
+                }
+            }, 3000);
+        }
+    }
+    
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'm' || e.key === 'M') {
+            toggleMusic();
+        } else if (e.key === 'Enter' && e.ctrlKey) {
+            sendMessage();
+        }
+    });
+    
+    // Test API connection on load
+    window.addEventListener('load', async function() {
+        try {
+            const testResponse = await fetch('/api/send-message', { method: 'GET' });
+            console.log('🌐 API Connection test:', testResponse.status);
+        } catch (error) {
+            console.warn('⚠️ API may not be available:', error.message);
+        }
+    });
+</script>
 </body>
 </html>
