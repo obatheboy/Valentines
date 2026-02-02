@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Valentine Messages</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💖</text></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
@@ -408,11 +409,10 @@
                         <i class="fas fa-sync-alt"></i> Refresh
                     </button>
                 </div>
-                <div class="responses-list" id="responsesList">
-                    <div class="empty-state" id="noResponses">
-                        <i class="fas fa-inbox"></i>
-                        <p>No responses yet</p>
-                    </div>
+                <div class="responses-list" id="responsesList"></div>
+                <div class="empty-state" id="noResponses">
+                    <i class="fas fa-inbox"></i>
+                    <p>No responses yet</p>
                 </div>
             </div>
             
@@ -423,11 +423,10 @@
                         <i class="fas fa-sync-alt"></i> Refresh
                     </button>
                 </div>
-                <div class="messages-list" id="messagesList">
-                    <div class="empty-state" id="noMessages">
-                        <i class="fas fa-comments"></i>
-                        <p>No messages yet</p>
-                    </div>
+                <div class="messages-list" id="messagesList"></div>
+                <div class="empty-state" id="noMessages">
+                    <i class="fas fa-comments"></i>
+                    <p>No messages yet</p>
                 </div>
             </div>
         </div>
@@ -527,10 +526,12 @@
     
     if (allResponses.length === 0) {
         noResponses.style.display = 'block';
+        responsesList.style.display = 'none';
         responsesList.innerHTML = '';
         console.log('📭 No responses to display');
     } else {
         noResponses.style.display = 'none';
+        responsesList.style.display = 'block';
         
         // Sort by newest first
         const sortedResponses = [...allResponses].sort((a, b) => 
@@ -575,10 +576,12 @@
     
     if (allMessages.length === 0) {
         noMessages.style.display = 'block';
+        messagesList.style.display = 'none';
         messagesList.innerHTML = '';
         console.log('📭 No messages to display');
     } else {
         noMessages.style.display = 'none';
+        messagesList.style.display = 'block';
         
         // Sort by newest first
         const sortedMessages = [...allMessages].sort((a, b) => 
