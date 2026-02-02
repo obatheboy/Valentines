@@ -1,4 +1,4 @@
-let responses = [];
+let messages = [];
 
 export default async function handler(req, res) {
     if (req.method !== 'GET') {
@@ -6,7 +6,7 @@ export default async function handler(req, res) {
     }
     
     try {
-        return res.status(200).json(responses);
+        return res.status(200).json(messages);
     } catch (error) {
         console.error('Error:', error);
         return res.status(500).json({ error: 'Internal server error' });

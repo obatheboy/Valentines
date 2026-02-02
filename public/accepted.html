@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You Made Me So Happy! 💖</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Georgia', serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f8c8dc, #ffafcc, #ff8fa3);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 30px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+            max-width: 900px;
+            width: 100%;
+            padding: 70px 50px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid #ff4d6d;
+        }
+        
+        .celebration {
+            font-size: 4rem;
+            margin-bottom: 30px;
+            animation: bounce 2s infinite;
+        }
+        
+        .greeting {
+            color: #ff4d6d;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        .name-highlight {
+            color: #d63384;
+            font-size: 3.5rem;
+            background: linear-gradient(to right, #ff4d6d, #ff8fa3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        
+        .message-container {
+            background: linear-gradient(to right, rgba(255, 175, 204, 0.1), rgba(255, 77, 109, 0.1));
+            border-radius: 25px;
+            padding: 50px 40px;
+            margin: 40px 0;
+            border: 2px solid rgba(255, 77, 109, 0.2);
+            text-align: left;
+            position: relative;
+        }
+        
+        .message-container::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 8rem;
+            color: rgba(255, 77, 109, 0.2);
+            font-family: 'Times New Roman', serif;
+        }
+        
+        .romantic-message {
+            font-size: 1.8rem;
+            color: #444;
+            line-height: 1.9;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .message-form {
+            margin: 50px 0;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 25px;
+            border: 2px dashed #ffafcc;
+        }
+        
+        .message-form h3 {
+            color: #d63384;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+        }
+        
+        .message-form textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 20px;
+            border: 2px solid #ffafcc;
+            border-radius: 20px;
+            font-size: 1.2rem;
+            resize: vertical;
+            outline: none;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+        
+        .message-form textarea:focus {
+            border-color: #ff4d6d;
+            box-shadow: 0 0 20px rgba(255, 77, 109, 0.2);
+        }
+        
+        .send-btn {
+            padding: 20px 50px;
+            background: linear-gradient(to right, #ff4d6d, #ff8fa3);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 10px 25px rgba(255, 77, 109, 0.4);
+        }
+        
+        .send-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(255, 77, 109, 0.6);
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+        
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 20px;
+            background: #ff4d6d;
+            top: -20px;
+            animation: confettiFall linear infinite;
+        }
+        
+        .confetti-piece:nth-child(2n) {
+            background: #ff8fa3;
+        }
+        
+        .confetti-piece:nth-child(3n) {
+            background: #ffafcc;
+        }
+        
+        .confetti-piece:nth-child(4n) {
+            background: #ff4d6d;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes confettiFall {
+            to {
+                transform: translateY(100vh) rotate(720deg);
+            }
+        }
+        
+        .success-message {
+            display: none;
+            padding: 20px;
+            background: rgba(40, 167, 69, 0.1);
+            border-radius: 15px;
+            border: 2px solid #28a745;
+            color: #28a745;
+            font-size: 1.2rem;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 25px;
+            }
+            
+            .celebration {
+                font-size: 3rem;
+            }
+            
+            .greeting {
+                font-size: 2rem;
+            }
+            
+            .name-highlight {
+                font-size: 2.5rem;
+            }
+            
+            .romantic-message {
+                font-size: 1.4rem;
+                line-height: 1.7;
+            }
+            
+            .message-form {
+                padding: 25px;
+            }
+            
+            .message-form h3 {
+                font-size: 1.5rem;
+            }
+            
+            .send-btn {
+                padding: 18px 40px;
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="celebration">🎉💖🎊</div>
+        
+        <div class="greeting">My Dearest</div>
+        <div class="name-highlight" id="userName">[Name]</div>
+        
+        <div class="message-container">
+            <div class="romantic-message" id="romanticMessage">
+                You have no idea how happy you've made me. From the moment you said yes, 
+                my world has been filled with colors I never knew existed. 
+                Your acceptance means everything to me - it's not just about Valentine's Day, 
+                but about having you in my life. I promise to cherish every moment with you, 
+                to make you smile every day, and to be the person you deserve. 
+                Thank you for choosing me. Thank you for being you. 
+                I can't wait to create beautiful memories together. 💖
+            </div>
+        </div>
+        
+        <div class="message-form">
+            <h3>💌 Send me a message:</h3>
+            <textarea id="userMessage" placeholder="Write your message here... You can share your feelings, thoughts, or anything you'd like to tell me. I'll reply to you personally!"></textarea>
+            <button class="send-btn" onclick="sendMessage()">
+                ✉️ Send Message to Me
+            </button>
+            <div class="success-message" id="successMessage">
+                ✅ Message sent successfully! I'll reply to you soon. 💖
+            </div>
+        </div>
+        
+        <div class="confetti" id="confettiContainer"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get name from URL or session storage
+            const urlParams = new URLSearchParams(window.location.search);
+            let name = urlParams.get('name');
+            
+            if (!name) {
+                name = sessionStorage.getItem('valentineName') || 'Beautiful';
+            }
+            
+            // Display the name
+            document.getElementById('userName').textContent = name;
+            
+            // Create confetti
+            function createConfetti() {
+                const container = document.getElementById('confettiContainer');
+                for (let i = 0; i < 100; i++) {
+                    const piece = document.createElement('div');
+                    piece.classList.add('confetti-piece');
+                    piece.style.left = Math.random() * 100 + '%';
+                    piece.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    piece.style.animationDelay = Math.random() * 2 + 's';
+                    piece.style.opacity = Math.random() * 0.7 + 0.3;
+                    container.appendChild(piece);
+                }
+            }
+            
+            createConfetti();
+        });
+        
+        async function sendMessage() {
+            const name = sessionStorage.getItem('valentineName') || 'Beautiful';
+            const message = document.getElementById('userMessage').value.trim();
+            
+            if (!message) {
+                alert("Please write a message before sending.");
+                return;
+            }
+            
+            try {
+                // Send message to server
+                const response = await fetch('/api/send-message', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name,
+                        message,
+                        timestamp: new Date().toISOString()
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Show success message
+                    document.getElementById('successMessage').style.display = 'block';
+                    document.getElementById('userMessage').value = '';
+                    
+                    // Scroll to success message
+                    document.getElementById('successMessage').scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            } catch (error) {
+                console.error('Error sending message:', error);
+                alert("There was an error sending your message. Please try again.");
+            }
+        }
+    </script>
+</body>
+</html>

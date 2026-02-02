@@ -2,11 +2,23 @@
   "rewrites": [
     {
       "source": "/",
-      "destination": "/index.html"
+      "destination": "/public/index.html"
+    },
+    {
+      "source": "/proposal",
+      "destination": "/public/proposal.html"
+    },
+    {
+      "source": "/accepted",
+      "destination": "/public/accepted.html"
     },
     {
       "source": "/admin",
-      "destination": "/admin.html"
+      "destination": "/public/admin.html"
+    },
+    {
+      "source": "/admin-login",
+      "destination": "/public/admin-login.html"
     },
     {
       "source": "/api/:path*",
@@ -24,10 +36,6 @@
         {
           "key": "X-Frame-Options",
           "value": "DENY"
-        },
-        {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
         }
       ]
     }

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine? 💌</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Georgia', serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 30px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
+            width: 100%;
+            padding: 70px 50px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid #ff4d6d;
+        }
+        
+        .greeting {
+            color: #ff4d6d;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .name-highlight {
+            color: #d63384;
+            font-size: 3rem;
+            background: linear-gradient(to right, #ff4d6d, #ff8fa3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        
+        .heart-container {
+            margin: 40px 0;
+            position: relative;
+        }
+        
+        .heart {
+            color: #ff4d6d;
+            font-size: 8rem;
+            animation: heartbeat 1.5s infinite;
+            display: inline-block;
+            filter: drop-shadow(0 10px 20px rgba(255, 77, 109, 0.5));
+        }
+        
+        .message {
+            font-size: 1.8rem;
+            color: #444;
+            line-height: 1.8;
+            margin: 50px 0;
+            padding: 0 30px;
+            font-style: italic;
+        }
+        
+        .question {
+            font-size: 2.5rem;
+            color: #d63384;
+            margin: 60px 0;
+            font-weight: bold;
+            padding: 30px;
+            background: linear-gradient(to right, rgba(255, 175, 204, 0.1), rgba(255, 77, 109, 0.1));
+            border-radius: 20px;
+            border: 2px solid rgba(255, 77, 109, 0.3);
+        }
+        
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 60px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 25px 60px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.4s;
+            min-width: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .yes-btn {
+            background: linear-gradient(to right, #28a745, #20c997);
+            color: white;
+        }
+        
+        .yes-btn:hover {
+            transform: translateY(-8px) scale(1.08);
+            box-shadow: 0 25px 40px rgba(40, 167, 69, 0.4);
+        }
+        
+        .no-btn {
+            background: linear-gradient(to right, #ff4d6d, #ff8fa3);
+            color: white;
+        }
+        
+        .no-btn:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 40px rgba(255, 77, 109, 0.4);
+        }
+        
+        .petals {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+        
+        .petal {
+            position: absolute;
+            color: rgba(255, 77, 109, 0.7);
+            font-size: 24px;
+            top: -50px;
+            animation: fall linear infinite;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 25px;
+            }
+            
+            .greeting {
+                font-size: 1.8rem;
+            }
+            
+            .name-highlight {
+                font-size: 2.2rem;
+            }
+            
+            .heart {
+                font-size: 5rem;
+            }
+            
+            .message {
+                font-size: 1.4rem;
+                padding: 0 15px;
+            }
+            
+            .question {
+                font-size: 1.8rem;
+                padding: 20px;
+            }
+            
+            .btn {
+                padding: 20px 40px;
+                font-size: 1.4rem;
+                min-width: 180px;
+            }
+            
+            .buttons {
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="greeting">My Dearest</div>
+        <div class="name-highlight" id="userName">[Name]</div>
+        
+        <div class="heart-container">
+            <div class="heart">💖</div>
+        </div>
+        
+        <div class="message">
+            Every moment with you feels like a beautiful dream. 
+            Your smile lights up my world, your laughter is my favorite melody, 
+            and your presence makes everything better. 
+            You are the most amazing person I've ever known.
+        </div>
+        
+        <div class="question">
+            Will you do me the incredible honor of being my Valentine?
+        </div>
+        
+        <div class="buttons">
+            <button class="btn yes-btn" onclick="answerYes()">
+                💝 YES! Absolutely
+            </button>
+            <button class="btn no-btn" onclick="answerNo()">
+                💔 Maybe...
+            </button>
+        </div>
+        
+        <div class="petals" id="petalsContainer"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get name from URL or session storage
+            const urlParams = new URLSearchParams(window.location.search);
+            let name = urlParams.get('name');
+            
+            if (!name) {
+                name = sessionStorage.getItem('valentineName') || 'Beautiful';
+            }
+            
+            // Display the name
+            document.getElementById('userName').textContent = name;
+            
+            // Save name for later use
+            sessionStorage.setItem('valentineName', name);
+            
+            // Create falling petals
+            function createPetals() {
+                const container = document.getElementById('petalsContainer');
+                const petals = ['💖', '🌸', '🌺', '🌷', '💐', '🥀'];
+                
+                for (let i = 0; i < 30; i++) {
+                    const petal = document.createElement('div');
+                    petal.classList.add('petal');
+                    petal.innerHTML = petals[Math.floor(Math.random() * petals.length)];
+                    petal.style.left = Math.random() * 100 + '%';
+                    petal.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                    petal.style.animationDuration = (Math.random() * 10 + 5) + 's';
+                    petal.style.animationDelay = Math.random() * 5 + 's';
+                    petal.style.opacity = Math.random() * 0.5 + 0.3;
+                    container.appendChild(petal);
+                }
+            }
+            
+            createPetals();
+        });
+        
+        function answerYes() {
+            const name = sessionStorage.getItem('valentineName') || 'Beautiful';
+            
+            // Save response to server
+            saveResponse('YES', name);
+            
+            // Redirect to acceptance page
+            window.location.href = `/accepted.html?name=${encodeURIComponent(name)}&answer=YES`;
+        }
+        
+        function answerNo() {
+            const name = sessionStorage.getItem('valentineName') || 'Beautiful';
+            
+            // Save response to server
+            saveResponse('MAYBE', name);
+            
+            // Move no button
+            const noBtn = document.querySelector('.no-btn');
+            const container = document.querySelector('.container');
+            const maxX = container.offsetWidth - noBtn.offsetWidth - 50;
+            const maxY = container.offsetHeight - noBtn.offsetHeight - 50;
+            
+            const randomX = Math.max(0, Math.min(maxX, Math.floor(Math.random() * maxX)));
+            const randomY = Math.max(0, Math.min(maxY, Math.floor(Math.random() * maxY)));
+            
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+            
+            // Change text
+            const messages = [
+                "Are you sure? 🥺",
+                "Think about it? 😊",
+                "I'll make it magical! ✨",
+                "Pretty please? 🙏",
+                "You know you want to! 😉",
+                "My heart is breaking 💔",
+                "Please say yes! 🥰"
+            ];
+            
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            noBtn.innerHTML = `💔 ${randomMessage}`;
+            
+            // After 3 clicks, force yes
+            let clickCount = parseInt(noBtn.getAttribute('data-clicks')) || 0;
+            clickCount++;
+            noBtn.setAttribute('data-clicks', clickCount);
+            
+            if (clickCount >= 3) {
+                answerYes();
+            }
+        }
+        
+        async function saveResponse(answer, name) {
+            try {
+                await fetch('/api/submit-response', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        answer,
+                        name,
+                        timestamp: new Date().toISOString()
+                    })
+                });
+            } catch (error) {
+                console.error('Error saving response:', error);
+            }
+        }
+    </script>
+</body>
+</html>

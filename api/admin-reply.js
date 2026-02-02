@@ -1,4 +1,4 @@
-let messages = [];
+let replies = [];
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
@@ -6,32 +6,27 @@ export default async function handler(req, res) {
     }
     
     try {
-        const { name, message, timestamp } = req.body;
+        const { originalMessageId, userName, reply, timestamp } = req.body;
         
-        if (!name || !message) {
+        if (!userName || !reply) {
             return res.status(400).json({ error: 'Missing required fields' });
         }
         
-        const msg = {
+        const replyObj = {
             id: Date.now().toString(),
-            name: name.trim(),
-            message: message.trim(),
+            originalMessageId,
+            userName,
+            reply: reply.trim(),
             timestamp: timestamp || new Date().toISOString(),
-            replied: false
         };
         
-        messages.push(msg);
+        replies.push(replyObj);
         
-        // Keep only last 100 messages
-        if (messages.length > 100) {
-            messages = messages.slice(-100);
-        }
-        
-        console.log('Message saved:', msg);
+        console.log('Admin reply saved:', replyObj);
         
         return res.status(200).json({ 
             success: true, 
-            message: 'Message sent successfully'
+            message: 'Reply sent successfully'
         });
         
     } catch (error) {
