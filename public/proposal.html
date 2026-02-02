@@ -306,6 +306,18 @@ color: transparent; /* Fallback for browsers that don't support background-clip 
                 white-space: nowrap;
             }
         }
+        
+        @media (max-width: 480px) {
+            .container { padding: 30px 20px; width: 95%; }
+            .greeting { font-size: 1.5rem; }
+            .name-highlight { font-size: 1.8rem; }
+            .heart { font-size: 4rem; }
+            .message { font-size: 1.1rem; margin: 30px 0; padding: 0; }
+            .question { font-size: 1.4rem; padding: 15px; margin: 30px 0; }
+            .buttons { flex-direction: column; gap: 15px; margin-top: 30px; }
+            .btn { width: 100%; min-width: auto; padding: 15px; font-size: 1.2rem; }
+            .no-btn { width: auto; display: inline-flex; align-self: center; }
+        }
     </style>
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
