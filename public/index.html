@@ -50,6 +50,13 @@
             font-size: 3.5rem;
             background: linear-gradient(to right, #ff4d6d, #ff8fa3);
             -webkit-background-clip: text;
+
+background-clip: text; /* Standard property */
+
+
+color: transparent; /* Fallback for browsers that don't support background-clip */
+
+
             -webkit-text-fill-color: transparent;
             line-height: 1.2;
         }
@@ -145,6 +152,17 @@
             border-top: 1px solid #eee;
         }
         
+        .creator-credit {
+            margin-top: 15px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .creator-credit span {
+            color: #ff4d6d;
+            font-weight: bold;
+        }
+        
         @keyframes heartbeat {
             0% { transform: scale(1); }
             50% { transform: scale(1.2); }
@@ -191,6 +209,10 @@
                 padding: 18px 40px;
                 font-size: 1.4rem;
             }
+            
+            .creator-credit {
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
@@ -218,6 +240,9 @@
         
         <footer>
             Made with 💖 • A heartfelt message awaits you
+            <div class="creator-credit">
+                Created with love by <span>Zyron</span>
+            </div>
         </footer>
     </div>
 
@@ -246,12 +271,22 @@
                     continueToProposal();
                 }
             });
+            
+            // Focus on input field
+            document.getElementById('name').focus();
+            
+            // Check if name was already entered (coming back)
+            const savedName = sessionStorage.getItem('valentineName');
+            if (savedName) {
+                document.getElementById('name').value = savedName;
+            }
         });
         
         function continueToProposal() {
             const name = document.getElementById('name').value.trim();
             if (!name) {
                 alert("Please enter your name to continue.");
+                document.getElementById('name').focus();
                 return;
             }
             
@@ -261,6 +296,13 @@
             // Redirect to proposal page with name as parameter
             window.location.href = `/proposal.html?name=${encodeURIComponent(name)}`;
         }
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && e.target.id !== 'name') {
+                continueToProposal();
+            }
+        });
     </script>
 </body>
 </html>

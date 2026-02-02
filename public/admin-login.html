@@ -122,6 +122,19 @@
             text-align: left;
         }
         
+        .creator-credit {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #666;
+            font-size: 0.85rem;
+        }
+        
+        .creator-credit span {
+            color: #ff8fa3;
+            font-weight: bold;
+        }
+        
         @keyframes heartbeat {
             0% { transform: scale(1); }
             50% { transform: scale(1.1); }
@@ -139,6 +152,10 @@
             
             h1 {
                 font-size: 1.8rem;
+            }
+            
+            .creator-credit {
+                font-size: 0.8rem;
             }
         }
     </style>
@@ -170,7 +187,12 @@
         <div class="admin-note">
             <strong>Note:</strong> This is the admin panel for the Valentine project. 
             Only the person who created this project should have access.
-            Default credentials: admin / valentine2024
+            <br><br>Default credentials: admin / valentine2024
+            <br><small>(Change these in the code before deploying)</small>
+        </div>
+        
+        <div class="creator-credit">
+            Created with 💖 by <span>Zyron</span>
         </div>
     </div>
 
@@ -221,6 +243,16 @@
                 login();
             }
         });
+        
+        // Also allow Enter on username field
+        document.getElementById('username').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('password').focus();
+            }
+        });
+        
+        // Auto-focus on username field
+        document.getElementById('username').focus();
         
         // Check if already logged in
         if (localStorage.getItem('valentineAdmin') === 'true') {

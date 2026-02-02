@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>You Made Me So Happy! 💖</title>
+    <!-- Audio for romantic music -->
+    <audio id="valentineMusic" autoplay loop>
+        <source src="/Perfect.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -53,6 +60,12 @@
             font-size: 3.5rem;
             background: linear-gradient(to right, #ff4d6d, #ff8fa3);
             -webkit-background-clip: text;
+
+            background-clip: text; /* Standard property */
+
+
+color: transparent; /* Fallback for browsers that don't support background-clip */
+
             -webkit-text-fill-color: transparent;
             display: block;
             margin: 20px 0;
@@ -174,15 +187,54 @@
             background: #ff4d6d;
         }
         
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+        /* Music Control Styles */
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            border: 2px solid #ff4d6d;
         }
         
-        @keyframes confettiFall {
-            to {
-                transform: translateY(100vh) rotate(720deg);
-            }
+        .music-control:hover {
+            transform: scale(1.1);
+            background: white;
+            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.4);
+        }
+        
+        .music-control i {
+            font-size: 24px;
+            color: #ff4d6d;
+        }
+        
+        /* Zyron Credit */
+        .creator-credit {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 8px 15px;
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .creator-credit span {
+            color: #ff8fa3;
+            font-weight: bold;
         }
         
         .success-message {
@@ -194,6 +246,17 @@
             color: #28a745;
             font-size: 1.2rem;
             margin-top: 20px;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes confettiFall {
+            to {
+                transform: translateY(100vh) rotate(720deg);
+            }
         }
         
         @media (max-width: 768px) {
@@ -229,6 +292,33 @@
             .send-btn {
                 padding: 18px 40px;
                 font-size: 1.3rem;
+            }
+            
+            .music-control {
+                width: 50px;
+                height: 50px;
+                bottom: 15px;
+                right: 15px;
+            }
+            
+            .creator-credit {
+                bottom: 15px;
+                left: 15px;
+                font-size: 0.8rem;
+                padding: 6px 12px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .music-control {
+                bottom: 70px;
+            }
+            
+            .creator-credit {
+                bottom: 70px;
+                left: 50%;
+                transform: translateX(-50%);
+                white-space: nowrap;
             }
         }
     </style>
@@ -266,6 +356,16 @@
         <div class="confetti" id="confettiContainer"></div>
     </div>
 
+    <!-- Music Control Button -->
+    <div class="music-control" onclick="toggleMusic()">
+        <i class="fas fa-pause" id="musicIcon"></i>
+    </div>
+
+    <!-- Zyron Credit -->
+    <div class="creator-credit">
+        Made with 💖 by <span>Zyron</span>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Get name from URL or session storage
@@ -294,7 +394,43 @@
             }
             
             createConfetti();
+            
+            // Setup music
+            setupMusic();
         });
+        
+        // Music functionality
+        function setupMusic() {
+            const audio = document.getElementById('valentineMusic');
+            const musicIcon = document.getElementById('musicIcon');
+            
+            // Set volume and loop
+            audio.volume = 0.7;
+            audio.loop = true;
+            
+            // Try to play music automatically (may require user interaction)
+            const playPromise = audio.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log("Autoplay prevented, waiting for user interaction");
+                    musicIcon.className = 'fas fa-play';
+                });
+            }
+        }
+        
+        function toggleMusic() {
+            const audio = document.getElementById('valentineMusic');
+            const musicIcon = document.getElementById('musicIcon');
+            
+            if (audio.paused) {
+                audio.play();
+                musicIcon.className = 'fas fa-pause';
+            } else {
+                audio.pause();
+                musicIcon.className = 'fas fa-play';
+            }
+        }
         
         async function sendMessage() {
             const name = sessionStorage.getItem('valentineName') || 'Beautiful';
@@ -330,12 +466,42 @@
                     document.getElementById('successMessage').scrollIntoView({
                         behavior: 'smooth'
                     });
+                    
+                    // Create more confetti for celebration
+                    createMoreConfetti();
                 }
             } catch (error) {
                 console.error('Error sending message:', error);
                 alert("There was an error sending your message. Please try again.");
             }
         }
+        
+        function createMoreConfetti() {
+            const container = document.getElementById('confettiContainer');
+            for (let i = 0; i < 50; i++) {
+                const piece = document.createElement('div');
+                piece.classList.add('confetti-piece');
+                piece.style.left = Math.random() * 100 + '%';
+                piece.style.animationDuration = (Math.random() * 2 + 1) + 's';
+                piece.style.animationDelay = '0s';
+                piece.style.opacity = Math.random() * 0.7 + 0.3;
+                container.appendChild(piece);
+                
+                // Remove after animation
+                setTimeout(() => {
+                    piece.remove();
+                }, 3000);
+            }
+        }
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'm' || e.key === 'M') {
+                toggleMusic();
+            } else if (e.key === 'Enter' && e.ctrlKey) {
+                sendMessage();
+            }
+        });
     </script>
 </body>
 </html>
