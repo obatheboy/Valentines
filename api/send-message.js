@@ -1,7 +1,4 @@
-// Global storage for messages
-if (!global.valentineMessages) {
-    global.valentineMessages = [];
-}
+import { addMessage, getMessages } from './data-storage.js';
 
 export default async function handler(req, res) {
     // Handle CORS
@@ -24,28 +21,19 @@ export default async function handler(req, res) {
                 });
             }
             
-            const newMessage = {
-                id: Date.now().toString(),
+            const newMessage = addMessage({
                 name: name.trim(),
                 message: message.trim(),
-                timestamp: timestamp || new Date().toISOString(),
-                replied: false
-            };
+                timestamp: timestamp || new Date().toISOString()
+            });
             
-            // Add to global storage
-            global.valentineMessages.push(newMessage);
-            
-            // Keep only last 100 messages
-            if (global.valentineMessages.length > 100) {
-                global.valentineMessages = global.valentineMessages.slice(-100);
-            }
-            
-            console.log('💌 Message saved from:', name);
+            console.log('💌 Message saved:', newMessage);
             
             return res.status(200).json({ 
                 success: true, 
                 message: 'Message sent successfully!',
-                id: newMessage.id
+                id: newMessage.id,
+                data: newMessage
             });
             
         } catch (error) {
@@ -57,16 +45,17 @@ export default async function handler(req, res) {
         }
     }
     
-    // Handle GET requests (for admin)
+    // Handle GET requests
     if (req.method === 'GET') {
         try {
-            const messages = global.valentineMessages || [];
+            const messages = getMessages();
+            console.log('📨 Returning', messages.length, 'messages');
             return res.status(200).json(messages);
         } catch (error) {
-            console.error('Error fetching messages:', error);
+            console.error('Error getting messages:', error);
             return res.status(500).json({ 
                 success: false, 
-                error: 'Failed to fetch messages' 
+                error: 'Failed to get messages' 
             });
         }
     }

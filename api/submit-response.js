@@ -1,7 +1,4 @@
-// Global storage for responses
-if (!global.valentineResponses) {
-    global.valentineResponses = [];
-}
+import { addResponse, getResponses } from './data-storage.js';
 
 export default async function handler(req, res) {
     // Handle CORS
@@ -24,26 +21,19 @@ export default async function handler(req, res) {
                 });
             }
             
-            const response = {
-                id: Date.now().toString(),
+            const newResponse = addResponse({
                 answer: answer.toUpperCase(),
                 name: name.trim(),
-                timestamp: timestamp || new Date().toISOString(),
-            };
+                timestamp: timestamp || new Date().toISOString()
+            });
             
-            // Add to global storage
-            global.valentineResponses.push(response);
-            
-            // Keep only last 50 responses
-            if (global.valentineResponses.length > 50) {
-                global.valentineResponses = global.valentineResponses.slice(-50);
-            }
-            
-            console.log('✅ Response saved:', name, '-', answer);
+            console.log('✅ Response saved:', newResponse);
             
             return res.status(200).json({ 
                 success: true, 
-                message: 'Response saved'
+                message: 'Response saved',
+                id: newResponse.id,
+                data: newResponse
             });
             
         } catch (error) {
@@ -55,16 +45,17 @@ export default async function handler(req, res) {
         }
     }
     
-    // Handle GET requests (for admin)
+    // Handle GET requests
     if (req.method === 'GET') {
         try {
-            const responses = global.valentineResponses || [];
+            const responses = getResponses();
+            console.log('📊 Returning', responses.length, 'responses');
             return res.status(200).json(responses);
         } catch (error) {
-            console.error('Error fetching responses:', error);
+            console.error('Error getting responses:', error);
             return res.status(500).json({ 
                 success: false, 
-                error: 'Failed to fetch responses' 
+                error: 'Failed to get responses' 
             });
         }
     }
