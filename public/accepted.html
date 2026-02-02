@@ -455,82 +455,72 @@ color: transparent; /* Fallback for browsers that don't support background-clip 
     }
     
     async function sendMessage() {
-        const name = sessionStorage.getItem('valentineName') || 'Beautiful';
-        const messageInput = document.getElementById('userMessage');
-        const message = messageInput.value.trim();
-        
-        if (!message) {
-            alert("Please write a message before sending.");
-            messageInput.focus();
-            return;
-        }
-        
-        // Show loading state
-        const sendBtn = document.querySelector('.send-btn');
-        const originalText = sendBtn.innerHTML;
-        sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-        sendBtn.disabled = true;
-        
-        try {
-            console.log('📤 Sending message to API...');
-            
-            // Send message to server
-            const response = await fetch('/api/send-message', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    name: name,
-                    message: message,
-                    timestamp: new Date().toISOString()
-                })
-            });
-            
-            console.log('📨 API Response status:', response.status);
-            
-            const result = await response.json();
-            console.log('📨 API Response data:', result);
-            
-            if (response.ok && result.success) {
-                // Show success message
-                const successMessage = document.getElementById('successMessage');
-                successMessage.style.display = 'block';
-                successMessage.innerHTML = `✅ Message sent successfully! I'll reply to you soon. 💖<br><small>Message ID: ${result.id || 'N/A'}</small>`;
-                
-                // Clear input
-                messageInput.value = '';
-                
-                // Scroll to success message
-                successMessage.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'center'
-                });
-                
-                // Create more confetti for celebration
-                createMoreConfetti();
-                
-                // Log to console for debugging
-                console.log('✅ Message sent successfully! ID:', result.id);
-                
-            } else {
-                // Handle API error
-                const errorMsg = result.error || 'Failed to send message';
-                throw new Error(errorMsg);
-            }
-            
-        } catch (error) {
-            console.error('❌ Error sending message:', error);
-            
-            // Show detailed error
-            alert(`Failed to send message: ${error.message}\n\nPlease try again or check console for details.`);
-            
-        } finally {
-            // Reset button state
-            sendBtn.innerHTML = originalText;
-            sendBtn.disabled = false;
-        }
+    const name = sessionStorage.getItem('valentineName') || 'Beautiful';
+    const messageInput = document.getElementById('userMessage');
+    const message = messageInput.value.trim();
+    
+    if (!message) {
+        alert("Please write a message before sending.");
+        messageInput.focus();
+        return;
     }
+    
+    // Show loading
+    const sendBtn = document.querySelector('.send-btn');
+    const originalText = sendBtn.innerHTML;
+    sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+    sendBtn.disabled = true;
+    
+    try {
+        console.log('📤 Sending message...');
+        
+        // Use the new unified API
+        const response = await fetch('/api/data?action=message', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name: name,
+                message: message,
+                timestamp: new Date().toISOString()
+            })
+        });
+        
+        console.log('📨 API Response:', response.status);
+        
+        if (response.ok) {
+            const result = await response.json();
+            console.log('✅ Message sent:', result);
+            
+            // Show success
+            const successMessage = document.getElementById('successMessage');
+            successMessage.style.display = 'block';
+            successMessage.innerHTML = `✅ Message sent successfully! I'll reply to you soon. 💖`;
+            
+            // Clear input
+            messageInput.value = '';
+            
+            // Scroll to success
+            successMessage.scrollIntoView({ behavior: 'smooth' });
+            
+            // Celebrate!
+            createMoreConfetti();
+            
+        } else {
+            const error = await response.json();
+            throw new Error(error.error || 'Failed to send message');
+        }
+        
+    } catch (error) {
+        console.error('❌ Error:', error);
+        alert(`Failed to send: ${error.message}\n\nTry refreshing the page.`);
+    } finally {
+        // Reset button
+        sendBtn.innerHTML = originalText;
+        sendBtn.disabled = false;
+    }
+}
     
     function createMoreConfetti() {
         const container = document.getElementById('confettiContainer');

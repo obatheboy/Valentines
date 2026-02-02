@@ -1,4 +1,4 @@
-// Responses are stored in global.valentineResponses
+import { getResponses } from './data-storage.js';
 
 export default async function handler(req, res) {
     // Handle CORS
@@ -12,8 +12,8 @@ export default async function handler(req, res) {
     
     if (req.method === 'GET') {
         try {
-            // Get from global storage
-            const responses = global.valentineResponses || [];
+            // Get from file storage
+            const responses = getResponses();
             
             // Sort by newest first
             const sortedResponses = responses.sort((a, b) => 

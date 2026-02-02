@@ -487,24 +487,24 @@ color: transparent; /* Fallback for browsers that don't support background-clip 
             }
         }
         
-        async function saveResponse(answer, name) {
-            try {
-                await fetch('/api/submit-response', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        answer,
-                        name,
-                        timestamp: new Date().toISOString()
-                    })
-                });
-            } catch (error) {
-                console.error('Error saving response:', error);
-            }
-        }
-        
+       async function saveResponse(answer, name) {
+    try {
+        await fetch('/api/data?action=response', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                answer,
+                name,
+                timestamp: new Date().toISOString()
+            })
+        });
+        console.log('✅ Response saved:', answer);
+    } catch (error) {
+        console.error('Error saving response:', error);
+    }
+}
         // Keyboard shortcuts
         document.addEventListener('keydown', function(e) {
             if (e.key === 'y' || e.key === 'Y') {
