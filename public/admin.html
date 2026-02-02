@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Valentine Project</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔒</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.8rem;
+            background: linear-gradient(to right, #ff4d6d, #ff8fa3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #aaa;
+            font-size: 1.2rem;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card h2 {
+            color: #ff8fa3;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .stat-box {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(to right, #ff4d6d, #ff8fa3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .stat-label {
+            color: #aaa;
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+        
+        .responses-list {
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .response-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 5px solid #ff4d6d;
+        }
+        
+        .response-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .response-name {
+            font-weight: bold;
+            font-size: 1.3rem;
+            color: #ff8fa3;
+        }
+        
+        .response-answer {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .answer-yes {
+            background: rgba(40, 167, 69, 0.2);
+            color: #28a745;
+            border: 1px solid #28a745;
+        }
+        
+        .answer-maybe {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+            border: 1px solid #ffc107;
+        }
+        
+        .answer-no {
+            background: rgba(220, 53, 69, 0.2);
+            color: #dc3545;
+            border: 1px solid #dc3545;
+        }
+        
+        .response-message {
+            color: #ccc;
+            margin-top: 10px;
+            font-style: italic;
+        }
+        
+        .response-time {
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        .chat-container {
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 15px;
+            max-width: 80%;
+        }
+        
+        .message.admin {
+            background: rgba(255, 77, 109, 0.2);
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .message.user {
+            background: rgba(77, 148, 255, 0.2);
+            border-bottom-left-radius: 5px;
+        }
+        
+        .message-sender {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .message-content {
+            margin-bottom: 5px;
+        }
+        
+        .message-time {
+            font-size: 0.8rem;
+            color: #888;
+            text-align: right;
+        }
+        
+        .chat-input {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 15px 20px;
+            border-radius: 25px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        .chat-input input:focus {
+            border-color: #ff4d6d;
+        }
+        
+        .chat-input button {
+            padding: 15px 30px;
+            border-radius: 25px;
+            border: none;
+            background: linear-gradient(to right, #ff4d6d, #ff8fa3);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .chat-input button:hover {
+            transform: scale(1.05);
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+        }
+        
+        .refresh-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto;
+            transition: background 0.3s;
+        }
+        
+        .refresh-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .password-prompt {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .password-box {
+            background: #1a1a2e;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 400px;
+            width: 90%;
+        }
+        
+        .password-box input {
+            width: 100%;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border: 2px solid #ff4d6d;
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+        
+        .password-box button {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(to right, #ff4d6d, #ff8fa3);
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+        
+        .error-message {
+            color: #ff6b6b;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #ff4d6d;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Password Prompt -->
+    <div class="password-prompt" id="passwordPrompt">
+        <div class="password-box">
+            <h2><i class="fas fa-lock"></i> Admin Access</h2>
+            <p>Enter the admin password to continue</p>
+            <input type="password" id="adminPassword" placeholder="Enter password">
+            <button onclick="checkPassword()">Access Dashboard</button>
+            <div class="error-message" id="passwordError">Incorrect password. Try again.</div>
+            <div style="margin-top: 20px; font-size: 0.9rem; color: #888;">
+                Default password: <code>obatheboy</code>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container" id="dashboard" style="display: none;">
+        <header>
+            <h1><i class="fas fa-heart"></i> Valentine Admin Dashboard</h1>
+            <p class="subtitle">Monitor responses and chat with your Valentine</p>
+            <button class="refresh-btn" onclick="loadData()">
+                <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+        </header>
+        
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-number" id="totalResponses">0</div>
+                <div class="stat-label">Total Responses</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number" id="yesResponses">0</div>
+                <div class="stat-label">Yes Answers</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number" id="maybeResponses">0</div>
+                <div class="stat-label">Maybe Answers</div>
+            </div>
+        </div>
+        
+        <div class="dashboard">
+            <div class="card">
+                <h2><i class="fas fa-inbox"></i> Recent Responses</h2>
+                <div class="responses-list" id="responsesList">
+                    <div class="empty-state" id="noResponses">
+                        <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                        <p>No responses yet. Share the proposal link!</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2><i class="fas fa-comments"></i> Live Chat</h2>
+                <div class="chat-container">
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="empty-state" id="noChat">
+                            <i class="fas fa-comments" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                            <p>No messages yet. Start a conversation!</p>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input">
+                        <input type="text" id="chatInput" placeholder="Type your message...">
+                        <button onclick="sendMessage()">
+                            <i class="fas fa-paper-plane"></i> Send
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            Valentine Project Admin Dashboard &copy; 2024
+            <br><small>All responses are stored securely. Share the main link: <span id="mainLink">Loading...</span></small>
+        </footer>
+    </div>
+
+    <script>
+        // Password protection
+        const ADMIN_PASSWORD = 'obatheboy'; // Change this to your own password
+        
+        function checkPassword() {
+            const input = document.getElementById('adminPassword').value;
+            const error = document.getElementById('passwordError');
+            
+            if (input === ADMIN_PASSWORD) {
+                document.getElementById('passwordPrompt').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                localStorage.setItem('valentineAdminAuth', 'true');
+                loadData();
+            } else {
+                error.style.display = 'block';
+                document.getElementById('adminPassword').value = '';
+                document.getElementById('adminPassword').focus();
+            }
+        }
+        
+        // Check if already authenticated
+        if (localStorage.getItem('valentineAdminAuth') === 'true') {
+            document.getElementById('passwordPrompt').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            loadData();
+        }
+        
+        // Load data from server
+        async function loadData() {
+            try {
+                // Load responses
+                const responsesRes = await fetch('/api/get-responses');
+                const responses = await responsesRes.json();
+                
+                // Update stats
+                document.getElementById('totalResponses').textContent = responses.length;
+                const yesCount = responses.filter(r => r.answer === 'YES').length;
+                const maybeCount = responses.filter(r => r.answer === 'MAYBE').length;
+                document.getElementById('yesResponses').textContent = yesCount;
+                document.getElementById('maybeResponses').textContent = maybeCount;
+                
+                // Display responses
+                const responsesList = document.getElementById('responsesList');
+                const noResponses = document.getElementById('noResponses');
+                
+                if (responses.length === 0) {
+                    noResponses.style.display = 'block';
+                } else {
+                    noResponses.style.display = 'none';
+                    
+                    // Sort by newest first
+                    responses.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                    
+                    let html = '';
+                    responses.slice(0, 10).forEach(response => {
+                        const answerClass = response.answer === 'YES' ? 'answer-yes' : 
+                                          response.answer === 'MAYBE' ? 'answer-maybe' : 'answer-no';
+                        
+                        html += `
+                            <div class="response-item">
+                                <div class="response-header">
+                                    <div class="response-name">
+                                        <i class="fas fa-user"></i> ${response.name || 'Anonymous'}
+                                    </div>
+                                    <span class="response-answer ${answerClass}">
+                                        ${response.answer}
+                                    </span>
+                                </div>
+                                ${response.message ? `<div class="response-message">"${response.message}"</div>` : ''}
+                                <div class="response-time">
+                                    <i class="far fa-clock"></i> ${new Date(response.timestamp).toLocaleString()}
+                                    ${response.ip ? ` • IP: ${response.ip}` : ''}
+                                </div>
+                            </div>
+                        `;
+                    });
+                    
+                    responsesList.innerHTML = html;
+                }
+                
+                // Load chat messages
+                await loadChat();
+                
+                // Update main link
+                document.getElementById('mainLink').textContent = window.location.origin;
+                
+            } catch (error) {
+                console.error('Error loading data:', error);
+                alert('Error loading data. Please try again.');
+            }
+        }
+        
+        // Load chat messages
+        async function loadChat() {
+            try {
+                const chatRes = await fetch('/api/get-chat?user=admin');
+                const chatData = await chatRes.json();
+                
+                const chatMessages = document.getElementById('chatMessages');
+                const noChat = document.getElementById('noChat');
+                
+                if (chatData.messages && chatData.messages.length > 0) {
+                    noChat.style.display = 'none';
+                    
+                    let html = '';
+                    chatData.messages.forEach(msg => {
+                        const isAdmin = msg.sender === 'admin';
+                        html += `
+                            <div class="message ${isAdmin ? 'admin' : 'user'}">
+                                <div class="message-sender">
+                                    ${isAdmin ? '<i class="fas fa-user-shield"></i> You (Admin)' : '<i class="fas fa-user"></i> ' + (msg.receiver === 'admin' ? 'User' : msg.receiver)}
+                                </div>
+                                <div class="message-content">${msg.message}</div>
+                                <div class="message-time">
+                                    ${new Date(msg.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                                </div>
+                            </div>
+                        `;
+                    });
+                    
+                    chatMessages.innerHTML = html;
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                } else {
+                    noChat.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error loading chat:', error);
+            }
+        }
+        
+        // Send message
+        async function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            try {
+                await fetch('/api/send-message', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        sender: 'admin',
+                        receiver: 'user',
+                        message: message,
+                        timestamp: new Date().toISOString()
+                    })
+                });
+                
+                input.value = '';
+                loadChat(); // Reload chat to show new message
+            } catch (error) {
+                console.error('Error sending message:', error);
+                alert('Error sending message. Please try again.');
+            }
+        }
+        
+        // Allow Enter key to send message
+        document.getElementById('chatInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        // Auto-refresh every 30 seconds
+        setInterval(loadData, 30000);
+        
+        // Initial load
+        loadData();
+    </script>
+</body>
+</html>
