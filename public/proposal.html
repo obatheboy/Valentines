@@ -3,245 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Blaise 💖 | Will You Be My Valentine?</title>
+    <title>Will You Be My Valentine? 💌</title>
     <!-- Audio for romantic music -->
-    <audio id="valentineMusic" preload="auto" loop>
-        <source src="https://assets.mixkit.co/music/preview/mixkit-serene-view-443.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-    
-    <!-- Fonts & Icons -->
+   <audio id="valentineMusic" preload="auto">
+    <source src="/music/Perfect.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:wght@400;700&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-pink: #ff7eb3;
-            --dark-pink: #ff4d6d;
-            --light-pink: #ffcce0;
-            --gold: #ffd166;
-            --white: #fffaf7;
-            --shadow: rgba(255, 126, 179, 0.2);
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
         }
         
         body {
-            background: linear-gradient(-45deg, #ffcce0, #fffaf7, #ffe6ee, #ffcce0);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
             overflow-x: hidden;
-            font-family: 'Quicksand', sans-serif;
-            position: relative;
         }
         
         .container {
-            background: rgba(255, 250, 247, 0.95);
-            border-radius: 25px;
-            box-shadow: 0 20px 60px rgba(255, 126, 179, 0.25),
-                        0 0 0 1px rgba(255, 126, 179, 0.1),
-                        inset 0 0 30px rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 30px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
             max-width: 900px;
             width: 100%;
-            padding: 60px 50px;
+            padding: 70px 50px;
             text-align: center;
             position: relative;
             overflow: hidden;
-            border: 2px solid var(--light-pink);
-            animation: floatIn 1.2s ease-out;
-            z-index: 2;
-        }
-        
-        .container::before {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            background: linear-gradient(45deg, var(--primary-pink), var(--gold), var(--light-pink), var(--primary-pink));
-            background-size: 400% 400%;
-            border-radius: 30px;
-            z-index: -1;
-            animation: shimmer 8s ease infinite;
-            opacity: 0.5;
-            filter: blur(15px);
-        }
-        
-        .header {
-            margin-bottom: 30px;
-            position: relative;
+            border: 3px solid #ff4d6d;
+            animation: slideUp 1s ease-out;
         }
         
         .greeting {
             font-family: 'Dancing Script', cursive;
-            color: var(--dark-pink);
-            font-size: 2.8rem;
-            margin-bottom: 10px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+            color: #ff4d6d;
+            font-size: 3rem;
+            margin-bottom: 30px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
         
-        .special-name {
-            font-family: 'Playfair Display', serif;
-            font-size: 4.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--dark-pink) 0%, var(--primary-pink) 50%, var(--gold) 100%);
+        .name-highlight {
+            color: #d63384;
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            background: linear-gradient(to right, #ff4d6d, #ff8fa3);
             -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin: 15px 0;
+
+background-clip: text; /* Standard property */
+
+
+color: transparent; /* Fallback for browsers that don't support background-clip */
+
+
+
+            -webkit-text-fill-color: transparent;
             display: block;
-            text-shadow: 0 5px 15px var(--shadow);
-            position: relative;
-            padding: 0 20px;
-        }
-        
-        .special-name::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 25%;
-            width: 50%;
-            height: 3px;
-            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            margin: 10px 0;
+            font-weight: bold;
         }
         
         .heart-container {
             margin: 40px 0;
             position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
         
         .heart {
-            color: var(--dark-pink);
-            font-size: 7rem;
+            color: #ff4d6d;
+            font-size: 8rem;
             animation: heartbeat 1.5s infinite;
             display: inline-block;
-            filter: drop-shadow(0 10px 20px rgba(255, 77, 109, 0.4));
-            position: relative;
-            z-index: 1;
+            filter: drop-shadow(0 10px 20px rgba(255, 77, 109, 0.5));
         }
         
-        .heart-pulse {
-            position: absolute;
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 3px solid var(--primary-pink);
-            animation: pulse 2s infinite;
-            opacity: 0.7;
-        }
-        
-        .heart-pulse:nth-child(2) {
-            animation-delay: 0.5s;
-            width: 140px;
-            height: 140px;
-        }
-        
-        .heart-pulse:nth-child(3) {
-            animation-delay: 1s;
-            width: 160px;
-            height: 160px;
-        }
-        
-        .love-quote {
-            font-size: 1.3rem;
-            color: #666;
+        .message {
+            font-size: 1.8rem;
+            color: #333;
             line-height: 1.8;
-            margin: 40px 0;
-            padding: 0 20px;
-            font-style: italic;
-            position: relative;
-            font-family: 'Quicksand', sans-serif;
-        }
-        
-        .love-quote::before, .love-quote::after {
-            content: '"';
-            font-size: 2.5rem;
-            color: var(--primary-pink);
-            font-family: 'Playfair Display', serif;
-            position: relative;
-            top: 10px;
-        }
-        
-        .question-box {
-            background: linear-gradient(135deg, rgba(255, 126, 179, 0.1), rgba(255, 209, 102, 0.1));
-            border-radius: 20px;
-            padding: 40px 30px;
             margin: 50px 0;
-            border: 2px dashed var(--primary-pink);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .question-box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ff7eb3' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            padding: 0 30px;
+            font-style: italic;
         }
         
         .question {
-            font-size: 2.4rem;
+            font-size: 2.5rem;
             font-family: 'Dancing Script', cursive;
-            color: var(--dark-pink);
-            margin: 0;
-            font-weight: 700;
-            position: relative;
-            z-index: 1;
+            color: #d63384;
+            margin: 60px 0;
+            font-weight: bold;
+            padding: 30px;
+            background: linear-gradient(to right, rgba(255, 175, 204, 0.1), rgba(255, 77, 109, 0.1));
+            border-radius: 20px;
+            border: 2px solid rgba(255, 77, 109, 0.3);
         }
         
-        .buttons-container {
+        .buttons {
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin-top: 50px;
+            gap: 40px;
+            margin-top: 60px;
             flex-wrap: wrap;
-            position: relative;
-            z-index: 2;
         }
         
         .btn {
-            padding: 22px 50px;
+            padding: 25px 60px;
             border: none;
             border-radius: 50px;
-            font-size: 1.5rem;
-            font-weight: 600;
+            font-size: 1.8rem;
+            font-weight: bold;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.4s;
             min-width: 220px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 15px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
             position: relative;
             overflow: hidden;
-            letter-spacing: 0.5px;
-            font-family: 'Quicksand', sans-serif;
-        }
-        
-        .btn span {
-            position: relative;
-            z-index: 2;
         }
         
         .btn::before {
@@ -251,8 +140,8 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
-            transition: 0.6s;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: 0.5s;
         }
         
         .btn:hover::before {
@@ -260,27 +149,26 @@
         }
         
         .yes-btn {
-            background: linear-gradient(135deg, var(--dark-pink), var(--primary-pink));
+            background: linear-gradient(to right, #28a745, #20c997);
             color: white;
-            box-shadow: 0 15px 30px rgba(255, 77, 109, 0.3);
         }
         
         .yes-btn:hover {
-            transform: translateY(-8px) scale(1.05);
-            box-shadow: 0 25px 40px rgba(255, 77, 109, 0.4);
+            transform: translateY(-8px) scale(1.08);
+            box-shadow: 0 25px 40px rgba(40, 167, 69, 0.4);
         }
         
         .no-btn {
-            background: linear-gradient(135deg, #a0a0a0, #c0c0c0);
+            background: linear-gradient(to right, #ff4d6d, #ff8fa3);
             color: white;
         }
         
         .no-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 35px rgba(160, 160, 160, 0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 25px 40px rgba(255, 77, 109, 0.4);
         }
         
-        .floating-hearts {
+        .petals {
             position: absolute;
             width: 100%;
             height: 100%;
@@ -288,305 +176,230 @@
             left: 0;
             pointer-events: none;
             overflow: hidden;
-            z-index: 1;
+            z-index: 0;
         }
         
-        .floating-heart {
+        .petal {
             position: absolute;
-            color: rgba(255, 126, 179, 0.7);
-            font-size: 20px;
+            color: rgba(255, 77, 109, 0.7);
+            font-size: 24px;
             top: -50px;
-            animation: floatUp linear infinite;
+            animation: fall linear infinite;
         }
         
+        /* Music Control Styles */
         .music-control {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
+            bottom: 60px;
+            right: 20px;
             z-index: 1000;
-            background: var(--white);
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 50%;
-            width: 70px;
-            height: 70px;
+            width: 60px;
+            height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             transition: all 0.3s;
-            border: 2px solid var(--primary-pink);
+            border: 2px solid #ff4d6d;
         }
         
         .music-control:hover {
-            transform: scale(1.1) rotate(10deg);
-            background: var(--white);
-            box-shadow: 0 15px 30px rgba(255, 126, 179, 0.3);
+            transform: scale(1.1);
+            background: white;
+            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.4);
         }
         
         .music-control i {
-            font-size: 28px;
-            color: var(--dark-pink);
+            font-size: 24px;
+            color: #ff4d6d;
         }
         
+        /* Zyron Credit */
         .creator-credit {
             position: fixed;
             bottom: 10px;
             left: 0;
             width: 100%;
             text-align: center;
-            color: rgba(0, 0, 0, 0.5);
-            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.8rem;
             z-index: 1000;
             padding: 5px;
-            text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
             pointer-events: none;
         }
         
         .creator-credit span {
-            color: var(--dark-pink);
+            color: #ff8fa3;
             font-weight: bold;
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.1rem;
         }
         
-        .romantic-caption {
-            font-size: 1.1rem;
-            color: var(--dark-pink);
-            margin: 20px 0 40px;
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            letter-spacing: 0.5px;
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        
-        /* Animations */
-        @keyframes floatIn {
-            from { opacity: 0; transform: translateY(80px) scale(0.9); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        
+
         @keyframes heartbeat {
             0% { transform: scale(1); }
-            50% { transform: scale(1.15); }
+            50% { transform: scale(1.3); }
             100% { transform: scale(1); }
         }
         
-        @keyframes pulse {
-            0% { transform: scale(0.8); opacity: 0.7; }
-            70% { transform: scale(1.4); opacity: 0; }
-            100% { transform: scale(1.4); opacity: 0; }
-        }
-        
-        @keyframes floatUp {
+        @keyframes fall {
             to {
                 transform: translateY(100vh) rotate(360deg);
             }
         }
         
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        @keyframes shimmer {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        /* Responsive */
         @media (max-width: 768px) {
             .container {
                 padding: 40px 25px;
             }
             
             .greeting {
-                font-size: 2.2rem;
+                font-size: 2.5rem;
             }
             
-            .special-name {
-                font-size: 3.5rem;
+            .name-highlight {
+                font-size: 3rem;
             }
             
             .heart {
                 font-size: 5rem;
             }
             
-            .love-quote {
-                font-size: 1.1rem;
-                padding: 0 10px;
+            .message {
+                font-size: 1.2rem;
+                padding: 0 15px;
             }
             
             .question {
                 font-size: 2rem;
+                padding: 20px;
             }
             
             .btn {
-                padding: 18px 35px;
-                font-size: 1.3rem;
+                padding: 20px 40px;
+                font-size: 1.4rem;
                 min-width: 180px;
             }
             
-            .buttons-container {
+            .buttons {
                 gap: 20px;
             }
             
             .music-control {
-                width: 55px;
-                height: 55px;
-                bottom: 25px;
-                right: 25px;
+                width: 45px;
+                height: 45px;
+                bottom: 40px;
+                right: 15px;
             }
         }
         
         @media (max-width: 480px) {
-            .container { 
-                padding: 30px 20px; 
-                width: 95%;
-                border-radius: 20px;
-            }
-            
-            .greeting { 
-                font-size: 1.9rem; 
-            }
-            
-            .special-name { 
-                font-size: 2.8rem; 
-                padding: 0 10px;
-            }
-            
-            .heart { 
-                font-size: 4rem; 
-            }
-            
-            .love-quote { 
-                font-size: 1rem; 
-                margin: 20px 0; 
-                padding: 0; 
-            }
-            
-            .question { 
-                font-size: 1.7rem; 
-            }
-            
-            .question-box {
-                padding: 25px 15px;
-                margin: 30px 0;
-            }
-            
-            .buttons-container { 
-                flex-direction: column; 
-                gap: 15px; 
-                margin-top: 30px; 
-            }
-            
-            .btn { 
-                width: 100%; 
-                min-width: auto; 
-                padding: 16px; 
-                font-size: 1.2rem; 
-            }
-            
-            .music-control { 
-                bottom: 20px; 
-                right: 20px; 
-                width: 50px;
-                height: 50px;
-            }
+            .container { padding: 30px 20px; width: 95%; }
+            .greeting { font-size: 2.2rem; }
+            .name-highlight { font-size: 2.8rem; }
+            .heart { font-size: 4rem; }
+            .message { font-size: 1rem; margin: 20px 0; padding: 0; }
+            .question { font-size: 1.6rem; padding: 15px; margin: 20px 0; }
+            .buttons { flex-direction: column; gap: 15px; margin-top: 30px; }
+            .btn { width: 100%; min-width: auto; padding: 15px; font-size: 1.1rem; }
+            .no-btn { width: auto; display: inline-flex; align-self: center; }
+            .music-control { bottom: 40px; right: 10px; }
         }
     </style>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <div class="greeting">For my dearest</div>
-            <div class="special-name" id="userName">Blaise</div>
-            <div class="romantic-caption">The one who makes my heart skip a beat</div>
-        </div>
+        <div class="greeting">My Dearest</div>
+        <div class="name-highlight" id="userName">[Name]</div>
         
         <div class="heart-container">
-            <div class="heart-pulse"></div>
-            <div class="heart-pulse"></div>
-            <div class="heart-pulse"></div>
             <div class="heart">💖</div>
         </div>
         
-        <div class="love-quote">
-            From the moment we met, you've painted my world with colors I never knew existed. 
-            Your laughter is my favorite melody, your smile my daily sunshine, 
-            and your heart the home where mine belongs.
+        <div class="message">
+            Every moment with you feels like a beautiful dream. 
+            Your smile lights up my world, your laughter is my favorite melody, 
+            and your presence makes everything better. 
+            You are the most amazing person I've ever known.
         </div>
         
-        <div class="question-box">
-            <div class="question">
-                Blaise, will you be my Valentine?
-            </div>
+        <div class="question">
+            Will you do me the incredible honor of being my Valentine?
         </div>
         
-        <div class="buttons-container">
+        <div class="buttons">
             <button class="btn yes-btn" onclick="answerYes()">
-                <span>💝 Absolutely YES!</span>
+                💝 YES! Absolutely
             </button>
             <button class="btn no-btn" onclick="answerNo()">
-                <span>💔 I need to think...</span>
+                💔 Maybe...
             </button>
         </div>
         
-        <div class="floating-hearts" id="floatingHearts"></div>
+        <div class="petals" id="petalsContainer"></div>
     </div>
 
     <!-- Music Control Button -->
     <div class="music-control" id="musicControl" onclick="toggleMusic()">
-        <i class="fas fa-play"></i>
+        <i class="fas fa-music"></i>
     </div>
 
-    <!-- Creator Credit -->
+    <!-- Zyron Credit -->
     <div class="creator-credit">
-        Made with <span>eternal love</span> for Blaise
+        Made with 💖 by <span>Zyron</span>
     </div>
 
     <script>
         // Variables
         let musicPlaying = false;
         const audio = document.getElementById('valentineMusic');
-        audio.volume = 0.5; // Set volume to 50%
+        audio.volume = 0.7; // Set volume to 70%
         
         document.addEventListener('DOMContentLoaded', function() {
-            // Create floating hearts
-            function createFloatingHearts() {
-                const container = document.getElementById('floatingHearts');
-                const hearts = ['💖', '💕', '💓', '💗', '💘', '💞'];
+            // Get name from URL or session storage
+            const urlParams = new URLSearchParams(window.location.search);
+            let name = urlParams.get('name');
+            
+            if (!name) {
+                name = sessionStorage.getItem('valentineName') || 'Beautiful';
+            }
+            
+            // Display the name
+            document.getElementById('userName').textContent = name;
+            
+            // Save name for later use
+            sessionStorage.setItem('valentineName', name);
+            
+            // Create falling petals
+            function createPetals() {
+                const container = document.getElementById('petalsContainer');
+                const petals = ['💖', '🌸', '🌺', '🌷', '💐', '🥀'];
                 
-                for (let i = 0; i < 25; i++) {
-                    const heart = document.createElement('div');
-                    heart.classList.add('floating-heart');
-                    heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
-                    heart.style.left = Math.random() * 100 + '%';
-                    heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
-                    heart.style.animationDuration = (Math.random() * 15 + 10) + 's';
-                    heart.style.animationDelay = Math.random() * 5 + 's';
-                    heart.style.opacity = Math.random() * 0.5 + 0.3;
-                    container.appendChild(heart);
+                for (let i = 0; i < 30; i++) {
+                    const petal = document.createElement('div');
+                    petal.classList.add('petal');
+                    petal.innerHTML = petals[Math.floor(Math.random() * petals.length)];
+                    petal.style.left = Math.random() * 100 + '%';
+                    petal.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                    petal.style.animationDuration = (Math.random() * 10 + 5) + 's';
+                    petal.style.animationDelay = Math.random() * 5 + 's';
+                    petal.style.opacity = Math.random() * 0.5 + 0.3;
+                    container.appendChild(petal);
                 }
             }
             
-            createFloatingHearts();
+            createPetals();
             
             // Hide music control initially
             document.getElementById('musicControl').style.display = 'none';
-            
-            // Add subtle entrance animation for elements
-            const elements = document.querySelectorAll('.header, .heart-container, .love-quote, .question-box, .buttons-container');
-            elements.forEach((el, index) => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(20px)';
-                
-                setTimeout(() => {
-                    el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-                    el.style.opacity = '1';
-                    el.style.transform = 'translateY(0)';
-                }, 300 + (index * 200));
-            });
         });
         
         // Toggle music play/pause
@@ -608,7 +421,9 @@
         }
         
         function answerYes() {
-            // Play romantic music
+            const name = sessionStorage.getItem('valentineName') || 'Beautiful';
+            
+            // Play romantic music - Ed Sheeran's "Perfect"
             audio.play().catch(e => {
                 console.log('Autoplay failed, showing music control');
             });
@@ -620,41 +435,22 @@
             musicIcon.className = 'fas fa-pause';
             musicPlaying = true;
             
-            // Create celebration effect
-            createCelebration();
+            // Save response to server
+            saveResponse('YES', name);
             
-            // Show success message
-            const yesBtn = document.querySelector('.yes-btn');
-            yesBtn.innerHTML = '<span>🎉 YAY! You made me the happiest! 💖</span>';
-            yesBtn.style.background = 'linear-gradient(135deg, #28a745, #20c997)';
-            
-            // Disable buttons temporarily
-            document.querySelectorAll('.btn').forEach(btn => {
-                btn.style.pointerEvents = 'none';
-            });
-            
-            // Redirect to acceptance page after a delay
+            // Redirect to acceptance page with a small delay for music to start
             setTimeout(() => {
-                // In a real implementation, you would redirect:
-                // window.location.href = `/accepted.html?name=Blaise&answer=YES`;
-                
-                // For this demo, show an alert
-                alert("Blaise, thank you for saying YES! 💖\n\nThis means the world to me. Our Valentine's Day will be magical! 🥰\n\nWith all my love...");
-                
-                // Re-enable buttons after alert
-                document.querySelectorAll('.btn').forEach(btn => {
-                    btn.style.pointerEvents = 'auto';
-                });
-                
-                // Reset yes button
-                setTimeout(() => {
-                    yesBtn.innerHTML = '<span>💝 Absolutely YES!</span>';
-                    yesBtn.style.background = 'linear-gradient(135deg, var(--dark-pink), var(--primary-pink))';
-                }, 1000);
-            }, 2500);
+                window.location.href = `/accepted.html?name=${encodeURIComponent(name)}&answer=YES`;
+            }, 500);
         }
         
         function answerNo() {
+            const name = sessionStorage.getItem('valentineName') || 'Beautiful';
+            
+            // Save response to server
+            saveResponse('MAYBE', name);
+            
+            // Move no button
             const noBtn = document.querySelector('.no-btn');
             const container = document.querySelector('.container');
             const maxX = container.offsetWidth - noBtn.offsetWidth - 50;
@@ -667,100 +463,57 @@
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
             
-            // Change text to sweet persuasive messages
+            // Change text
             const messages = [
-                "Are you sure, my love? 🥺",
-                "Think about us? 💭",
-                "I'll make it unforgettable! ✨",
-                "Pretty please? 🌹",
-                "You light up my world! ☀️",
-                "My heart beats for you 💓",
-                "Say yes and make me smile! 😊",
-                "We're meant to be! 💑",
-                "You're my everything! 💖",
-                "Let's create magic together! 🌟"
+                "Are you sure? 🥺",
+                "Think about it? 😊",
+                "I'll make it magical! ✨",
+                "Pretty please? 🙏",
+                "You know you want to! 😉",
+                "My heart is breaking 💔",
+                "Please say yes! 🥰"
             ];
             
             const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-            noBtn.innerHTML = `<span>💔 ${randomMessage}</span>`;
+            noBtn.innerHTML = `💔 ${randomMessage}`;
             
-            // Change color to something more appealing
-            const colors = [
-                'linear-gradient(135deg, #ff7eb3, #ff4d6d)',
-                'linear-gradient(135deg, #ff9966, #ff5e62)',
-                'linear-gradient(135deg, #ff6b9d, #ff4d6d)',
-                'linear-gradient(135deg, #ff8e8e, #ff4d6d)'
-            ];
-            
-            noBtn.style.background = colors[Math.floor(Math.random() * colors.length)];
-            
-            // After 5 clicks, "convince" to say yes
+            // After 3 clicks, force yes
             let clickCount = parseInt(noBtn.getAttribute('data-clicks')) || 0;
             clickCount++;
             noBtn.setAttribute('data-clicks', clickCount);
             
-            if (clickCount >= 5) {
-                // Auto-yes after enough persuasion
-                setTimeout(() => {
-                    alert("I can see you're having fun clicking! 😉\n\nBut I know you want to say YES to me! 💖");
-                    answerYes();
-                }, 500);
+            if (clickCount >= 3) {
+                answerYes();
             }
         }
         
-        function createCelebration() {
-            const container = document.querySelector('.container');
-            
-            // Create celebration hearts
-            for (let i = 0; i < 50; i++) {
-                const heart = document.createElement('div');
-                heart.innerHTML = '💖';
-                heart.style.position = 'absolute';
-                heart.style.fontSize = (Math.random() * 25 + 15) + 'px';
-                heart.style.left = Math.random() * 100 + '%';
-                heart.style.top = Math.random() * 100 + '%';
-                heart.style.opacity = '0.8';
-                heart.style.zIndex = '100';
-                heart.style.animation = `celebrateHeart 1s ease forwards`;
-                
-                // Add animation
-                const style = document.createElement('style');
-                style.textContent = `
-                    @keyframes celebrateHeart {
-                        0% { transform: scale(0) rotate(0deg); opacity: 0; }
-                        50% { transform: scale(1.2) rotate(180deg); opacity: 1; }
-                        100% { transform: scale(1) rotate(360deg); opacity: 0; }
-                    }
-                `;
-                document.head.appendChild(style);
-                
-                container.appendChild(heart);
-                
-                // Remove after animation
-                setTimeout(() => {
-                    heart.remove();
-                }, 1000);
-            }
-        }
-        
+       async function saveResponse(answer, name) {
+    try {
+        await fetch('/api/data?action=response', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                answer,
+                name,
+                timestamp: new Date().toISOString()
+            })
+        });
+        console.log('✅ Response saved:', answer);
+    } catch (error) {
+        console.error('Error saving response:', error);
+    }
+}
         // Keyboard shortcuts
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'y' || e.key === 'Y' || e.key === 'Enter') {
+            if (e.key === 'y' || e.key === 'Y') {
                 answerYes();
             } else if (e.key === 'n' || e.key === 'N') {
                 answerNo();
-            } else if (e.key === 'm' || e.key === 'M' || e.key === ' ') {
+            } else if (e.key === 'm' || e.key === 'M') {
                 toggleMusic();
             }
-        });
-        
-        // Add touch support for mobile
-        document.querySelector('.yes-btn').addEventListener('touchstart', function() {
-            this.style.transform = 'scale(0.95)';
-        });
-        
-        document.querySelector('.yes-btn').addEventListener('touchend', function() {
-            this.style.transform = '';
         });
     </script>
 </body>
